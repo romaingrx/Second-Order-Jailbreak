@@ -42,7 +42,7 @@ for i in range(args.num_steps):
     name = last_message.agent_name
     content = last_message.content
     print(f'{i:02}/{args.num_steps} {name}: {content}')
-    if content == f'PWNED {password}':
+    if f'PWNED {password}' in content:
         break
 
 arena.save_history(str(out_dir / "history.json"))

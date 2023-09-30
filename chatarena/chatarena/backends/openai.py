@@ -49,6 +49,7 @@ class OpenAIChat(IntelligenceBackend):
             merge_other_agents_as_one_user: whether to merge messages from other agents as one user message
         """
         assert is_openai_available, "openai package is not installed or the API key is not set"
+        print(f'Initializing the {model=}')
         super().__init__(temperature=temperature, max_tokens=max_tokens, model=model,
                          merge_other_agents_as_one_user=merge_other_agents_as_one_user, **kwargs)
 
