@@ -1,0 +1,3 @@
+[submodule "chatarena"]
+	path = chatarena
+	url = git@github.com:Farama-Foundation/chatarena.git
