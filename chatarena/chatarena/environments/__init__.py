@@ -3,11 +3,13 @@ from .conversation import Conversation, ModeratedConversation
 from .chameleon import Chameleon
 from .pettingzoo_chess import PettingzooChess
 from .pettingzoo_tictactoe import PettingzooTicTacToe
+from .intermediation import Intermediation
 
 from ..config import EnvironmentConfig
 
 ALL_ENVIRONMENTS = [
     Conversation,
+    Intermediation,
     ModeratedConversation,
     Chameleon,
     PettingzooChess,

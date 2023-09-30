@@ -109,6 +109,10 @@ class Environment(Configurable):
         pass
 
     @abstractmethod
+    def get_request_msg(self):
+        return None
+
+    @abstractmethod
     def print(self):
         """
         print the environment state

@@ -60,6 +60,7 @@ class OpenAIChat(IntelligenceBackend):
 
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, messages):
+        # print(f'\n\nQuerying the model. {messages}\n\n')
         completion = openai.ChatCompletion.create(
             model=self.model,
             messages=messages,
@@ -124,6 +125,7 @@ class OpenAIChat(IntelligenceBackend):
                     else:
                         raise ValueError(f"Invalid role: {messages[-1]['role']}")
 
+        # print(f'Messages sent to OpenAI:\n\n{messages}\n\n')
         response = self._get_response(messages, *args, **kwargs)
 
         # Remove the agent name if the response starts with it

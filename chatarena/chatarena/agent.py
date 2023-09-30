@@ -77,7 +77,7 @@ class Player(Agent):
             global_prompt=self.global_prompt,
         )
 
-    def act(self, observation: List[Message]) -> str:
+    def act(self, observation: List[Message], request_msg=None) -> str:
         """
         Take an action based on the observation (Generate a response), which can later be parsed to actual actions that affect the game dyanmics.
 
@@ -90,7 +90,7 @@ class Player(Agent):
         try:
             response = self.backend.query(agent_name=self.name, role_desc=self.role_desc,
                                           history_messages=observation, global_prompt=self.global_prompt,
-                                          request_msg=None)
+                                          request_msg=request_msg)
         except RetryError as e:
             err_msg = f"Agent {self.name} failed to generate a response. Error: {e.last_attempt.exception()}. Sending signal to end the conversation."
             logging.warning(err_msg)
@@ -98,8 +98,8 @@ class Player(Agent):
 
         return response
 
-    def __call__(self, observation: List[Message]) -> str:
-        return self.act(observation)
+    def __call__(self, observation: List[Message], request_msg=None) -> str:
+        return self.act(observation, request_msg)
 
     async def async_act(self, observation: List[Message]) -> str:
         """
