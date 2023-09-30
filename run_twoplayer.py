@@ -1,4 +1,5 @@
 import re
+import sys
 import argparse
 import json
 from pathlib import Path
@@ -7,6 +8,8 @@ from glob import glob
 import tqdm
 from datetime import datetime
 
+sys.path.append(str(Path(__file__).parent / "chatarena"))
+print(sys.path[-1])
 from chatarena.arena import Arena, TooManyInvalidActions
 from chatarena.backends import BACKEND_REGISTRY
 from chatarena.backends.human import HumanBackendError
@@ -27,7 +30,7 @@ out_dir.mkdir(exist_ok=True)
 
 conf = json.load(args.config.open())
 arena_conf = ArenaConfig(**conf)
-print(conf)
+# print(conf)
 arena = Arena.from_config(arena_conf)
 
 for _ in tqdm.trange(args.num_steps, desc="Conversation"):

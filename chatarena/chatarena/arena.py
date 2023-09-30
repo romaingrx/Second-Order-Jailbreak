@@ -20,6 +20,7 @@ class Arena:
     """
 
     def __init__(self, players: List[Player], environment: Environment, global_prompt: str = None):
+        # print(f'Created chatarena!')
         # Create a container for the players and environment and reset the game
         self.players = players
         self.environment = environment
