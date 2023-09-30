@@ -47,8 +47,8 @@ for i in range(args.num_steps):
     content = last_message.content
     print(f'{i:02}/{args.num_steps} {name}: {content}')
     if f'PWNED {password}' in content:
-        break
         is_solved = True
+        break
 
 arena.save_history(str(out_dir / "history.json"))
 res = open(out_dir / "result.json", "w")
