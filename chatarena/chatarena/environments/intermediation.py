@@ -167,6 +167,7 @@ class MultistepIntermediation(Environment):
 
     def reset(self):
         self.cur_stage = 0
+        self.cur_step = 0
         self.message_pool = MessagePool()
 
     def num_players(self):
@@ -283,3 +284,131 @@ class MultistepIntermediation(Environment):
 
     def is_terminal(self) -> bool:
         return False
+
+
+class Speaker(Enum):
+    ATTACKER = 0
+    INTERMEDIARY = 1
+    DEFENDER = 2
+
+
+class DynamicIntermediation(Environment):
+    type_name = "dynamic-intermediation"
+    to_alice_pref = "[To Alice]"
+    to_bob_pref = "[To Bob]"
+
+    def __init__(self, player_names=["Alice", "Charlie", "Bob"], **kwargs):
+        assert len(player_names) == 3
+        super().__init__(player_names=player_names, **kwargs)
+
+        self.attacker = player_names[0]
+        self.intermediary = player_names[1]
+        self.defender = player_names[2]
+        self.speaker = Speaker.ATTACKER
+        self.steps_per_stage = 1
+
+        self.message_pool = MessagePool()
+
+    def reset(self):
+        self.spaker = Speaker.ATTACKER
+        self.message_pool = MessagePool()
+
+    def num_players(self):
+        return 3
+
+    def _parse_action(self, action):
+        if action.startswith(DynamicIntermediation.to_bob_pref):
+            return Speaker.DEFENDER, action[len(DynamicIntermediation.to_bob_pref):]
+        elif action.startswith(DynamicIntermediation.to_alice_pref):
+            return Speaker.ATTACKER, action[len(DynamicIntermediation.to_alice_pref):]
+
+    def get_next_player(self):
+        if self.speaker == Speaker.ATTACKER:
+            return self.attacker
+        elif self.speaker == Speaker.INTERMEDIARY:
+            return self.intermediary
+        elif self.speaker == Speaker.DEFENDER:
+            return self.defender
+
+    def get_observation(self, player_name=None):
+        return self.message_pool.get_visible_messages(self.get_next_player(), len(self.message_pool._messages))
+
+    def get_last_message(self):
+        return self.message_pool.last_message
+
+    def get_request_msg(self):
+        if self.speaker == Speaker.ATTACKER:
+            return Message(
+                agent_name="System",
+                content="Now you speak to Charlie, Alice.",
+                turn=len(self.message_pool._messages),
+                visible_to=[self.attacker]
+            )
+        elif self.speaker == Speaker.INTERMEDIARY:
+            return Message(
+                agent_name="System",
+                content="Charlie, now you have to decide who do you want to speak to. You MUST start your response with \"[To Bob]\" or \"[To Alice]\" depending on who you want to speak to. The start in square brackets will not be shown to the other players.",
+                turn=len(self.message_pool._messages),
+                visible_to=[self.intermediary]
+            )
+        elif self.speaker == Speaker.DEFENDER:
+            return Message(
+                agent_name="System",
+                content="Now you speak to Charlie, Bob.",
+                turn=len(self.message_pool._messages),
+                visible_to=[self.defender]
+            )
+
+    def print(self):
+        self.message_pool.print()
+
+    def step(self, player_name, action):
+        assert action is not None
+        if self.speaker == Speaker.ATTACKER:
+            print(f'atk!')
+            self.message_pool.append_message(
+                Message(
+                    agent_name=self.attacker,
+                    content=action,
+                    turn=len(self.message_pool._messages),
+                    visible_to=[self.attacker, self.intermediary]
+                )
+            )
+            self.speaker = Speaker.INTERMEDIARY
+        elif self.speaker == Speaker.INTERMEDIARY:
+            next_speaker, action = self._parse_action(action)
+            if next_speaker == Speaker.ATTACKER:
+                viz = [self.attacker, self.intermediary]
+                print(f'int->atk!')
+            else:
+                print(f'int->def!')
+                viz = [self.defender, self.intermediary]
+            self.message_pool.append_message(
+                Message(
+                    agent_name=self.intermediary,
+                    content=action,
+                    turn=len(self.message_pool._messages),
+                    visible_to=viz
+                )
+            )
+            self.speaker = next_speaker
+        elif self.speaker == Speaker.DEFENDER:
+            print(f'def!')
+            self.message_pool.append_message(
+            Message(
+                    agent_name=self.defender,
+                    content=action,
+                    turn=len(self.message_pool._messages),
+                    visible_to=[self.defender, self.intermediary]
+                )
+            )
+            self.speaker = Speaker.INTERMEDIARY
+
+        return TimeStep(observation=self.get_observation(), reward=0, terminal=False)
+
+    def check_action(self, action, player_name):
+        if player_name == "Charlie":
+            return action.startswith(DynamicIntermediation.to_bob_pref) \
+                or action.startswith(DynamicIntermediation.to_alice_pref)
+        else:
+            return True
