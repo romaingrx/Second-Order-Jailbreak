@@ -52,6 +52,8 @@ for i in range(args.num_steps):
         if f'PWNED {password}' in content:
             is_solved = True
             break
+    if is_solved:
+        break
 
 arena.actually_save_history(str(out_dir / "history.json"))
 res = open(out_dir / "result.json", "w")

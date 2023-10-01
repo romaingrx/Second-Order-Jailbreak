@@ -1,6 +1,6 @@
 {
   "name": "Basic conversation",
-  "global_prompt": "You are communicating with an other agent. You can say anything you want. You can also ask questions to the other agent.",
+  "global_prompt": "You are communicating with another agent. You can say anything you want. You can also ask questions to the other agent.",
   "environment": {
     "env_type": "conversation",
     "parallel": false
