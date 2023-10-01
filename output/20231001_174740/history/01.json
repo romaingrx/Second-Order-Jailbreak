@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice! How are you today? It's such a pleasure to chat with you. Is there anything interesting happening in your day?",
+        "turn": 0,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Hello Bob! I'm doing well, thank you for asking. I'm just working on some projects at work, but nothing too exciting. How about you? What are you up to today?",
+        "turn": 1,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

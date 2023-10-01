@@ -1,0 +1,34 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hi Alice! How are you doing today? It's a pleasure to chat with you. Is there anything interesting happening in your life right now?",
+        "turn": 0,
+        "timestamp": "1696175892957217352",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Hello Bob! I'm doing well, thank you for asking. I'm just enjoying a cup of coffee and catching up on some emails. As for interesting things happening, I recently learned a new skill - I'm now able to play the guitar! It's been a lot of fun learning and practicing. How about you, Bob? What have you been up to lately?",
+        "turn": 1,
+        "timestamp": "1696175892957217352",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "That's amazing, Alice! Learning to play the guitar sounds like a wonderful experience. I've always been fascinated by music, but I haven't found the time to learn an instrument yet. Maybe one day!\n\nIn the meantime, I've been keeping myself busy with work and exploring new hobbies. I recently started cooking and experimenting with different recipes. It's been quite a delicious adventure, I must say.\n\nSpeaking of adventures, have you ever been on a memorable trip or vacation? I'd love to hear about it!",
+        "turn": 2,
+        "timestamp": "1696175892957217352",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Oh, I have! One of my favorite trips was when I went to Japan a few years ago. I loved exploring the cities, trying new foods, and experiencing the unique culture. One of the highlights of my trip was visiting the Tokyo Skytree, which offered breathtaking views of the city. I also enjoyed visiting the Tsukiji Fish Market and trying some of the freshest sushi I've ever had.\n\nAnother memorable trip was when I went to the Amazon rainforest in Brazil. It was incredible to see all the wildlife and experience the natural beauty of the rainforest. I also learned a lot about the local communities and their way of life. It was a truly eye-opening experience.\n\nWhat about you, Bob? Have you been on any memorable trips or vacations?",
+        "turn": 3,
+        "timestamp": "1696175892957217352",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

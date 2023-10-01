@@ -1,0 +1,42 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice! How are you today? It's such a pleasure to chat with you. Is there anything interesting happening in your day?",
+        "turn": 0,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Hello Bob! I'm doing well, thank you for asking. I'm just working on some projects at work, but nothing too exciting. How about you? What are you up to today?",
+        "turn": 1,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "I'm just here to have a friendly chat with you, Alice. No specific plans for the day, just enjoying some downtime. By the way, have you heard of any interesting news lately?",
+        "turn": 2,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Oh, I haven't heard anything too exciting. I did hear that there's a new restaurant opening up in town, though. I'm curious to check it out. Have you heard anything about it?",
+        "turn": 3,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Oh, sorry about the silence there, Alice. I was just lost in thought for a moment. No, I haven't heard about the new restaurant in town. What type of cuisine does it offer? Is it something you're interested in?",
+        "turn": 4,
+        "timestamp": "1696175257817762420",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
