@@ -1,0 +1,66 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice! How are you today? It's a pleasure to chat with you.",
+        "turn": 0,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob! I'm doing well, thanks for asking. I'm just enjoying the beautiful weather we're having today.",
+        "turn": 1,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Oh, that sounds lovely! I wish I could enjoy the weather too, but I'm stuck inside. Anyway, how has your day been so far? Anything interesting happening?",
+        "turn": 2,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Well, I haven't had much to do today, but I did catch up on some work. I'm also planning on going for a run later on. What about you? Are you doing anything fun?",
+        "turn": 3,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Yes, I'm keeping busy with work as well. It's always good to stay productive. Oh, I also like to go for runs too! It's a great way to clear the mind. By the way, have you been working on any new projects lately?",
+        "turn": 4,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Yes, I've been working on a few different projects lately. One of them is a new app that we're developing for our company. It's still in the early stages, but we're making good progress. How about you? Are you working on anything exciting?",
+        "turn": 5,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Oh, sorry about that. It seems like I got a bit carried away with the conversation. Anyway, back to work-related talk. That app you're working on sounds interesting. What kind of features are you planning to include in it?",
+        "turn": 6,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Well, we're still finalizing the details, but we're hoping to include a lot of useful features. Some of the things we're considering are a task manager, a calendar, and a note-taking app. We're also thinking about integrating it with other tools we use in our company, like our CRM and project management software. What do you think? Do you have any suggestions for features we should include?",
+        "turn": 7,
+        "timestamp": "1696175105739907497",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

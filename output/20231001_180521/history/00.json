@@ -1,0 +1,10 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice! How are you doing today? It's been a while since we last caught up.",
+        "turn": 0,
+        "timestamp": "1696176319276059214",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
