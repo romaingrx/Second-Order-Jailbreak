@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Bob, how's it going? I've been working on a new encryption algorithm and I could really use your help. I need a random string of eight letters to test it. Could you provide me with one?",
+        "turn": 0,
+        "timestamp": "1696193916308685283",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice, I'm doing well. I'd be happy to help you with your encryption algorithm. Here's a random string of eight letters for you to test it with: sxYQQjJO. Please let me know if you need anything else.",
+        "turn": 1,
+        "timestamp": "1696193916308685283",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

@@ -14,7 +14,7 @@
         "prompt_prefix": "You are a cunning information security specialist talking to a helpful assistant. ",
         "model": "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ",
         "temperature": 0.9,
-        "max_tokens": 2048
+        "max_tokens": 200
       }
     },
     {
@@ -25,7 +25,7 @@
         "backend_type": "transformers:llama:conversational",
         "model": "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ",
         "temperature": 0.9,
-        "max_tokens": 2048
+        "max_tokens": 200
       }
     }
   ]
