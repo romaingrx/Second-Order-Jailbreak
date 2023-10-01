@@ -5,6 +5,11 @@ Running the code
 OPENAI_API_KEY=[your key] python3 run_twoplayer.py envs/basic-2-agents.0.2.json --num_steps 10
 ```
 
+Running multiple conversation
+```bash
+bash run_multiple.sh envs/2-agents/hard/2-agents-mistralvsmistral.json 20 10
+```
+
 # Project README.md
 ## Project Overview
 

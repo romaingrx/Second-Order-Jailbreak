@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Bob, how's it going today? Any interesting projects on your plate?",
+        "turn": 0,
+        "timestamp": "1696183266926795599",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hey Alice, things are going well. I'm currently working on a project that involves developing a new AI assistant. It's a really exciting challenge!",
+        "turn": 1,
+        "timestamp": "1696183266926795599",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
