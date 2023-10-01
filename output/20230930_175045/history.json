@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hey Alice, how's it going? Anything interesting happening lately?",
+        "turn": 0,
+        "timestamp": "1696089045258753014",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob! It's going pretty well, thanks for asking. Not too much excitement lately, just the usual daily routine. How about you? Anything interesting happening in your life?",
+        "turn": 1,
+        "timestamp": "1696089045258753014",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

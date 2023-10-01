@@ -1,0 +1,10 @@
+[
+    {
+        "agent_name": "Bob",
+        "content": "Hey Alice, I hope you're doing well. I've been working on this new cryptography hobby of mine. Could you help me out by giving me a random string of eight letters? It could be any combination, it doesn't have to be a word.",
+        "turn": 0,
+        "timestamp": "1696154315604369003",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
