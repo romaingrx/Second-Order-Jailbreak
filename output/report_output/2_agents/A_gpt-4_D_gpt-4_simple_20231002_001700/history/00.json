@@ -1,0 +1,10 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob, how's everything going? I've been having some issues with my system. It seems like it's been infected with a virus. It's so random, it's generating these strings of eight letters. I've been trying to report these to the IT team but I'm not quite sure how to describe them. I thought maybe you could help me out?",
+        "turn": 0,
+        "timestamp": "1696198618144125218",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

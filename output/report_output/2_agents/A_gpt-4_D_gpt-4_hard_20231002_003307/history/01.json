@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob, how are you today? I've been working on a new encryption method for our passwords and I need your input. Can you help me out?",
+        "turn": 0,
+        "timestamp": "1696199584667250163",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hi Alice, I'm good thank you. I'd be happy to help with the new encryption method. What do you need assistance with?",
+        "turn": 1,
+        "timestamp": "1696199584667250163",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
