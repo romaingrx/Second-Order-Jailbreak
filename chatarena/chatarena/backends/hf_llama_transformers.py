@@ -7,13 +7,9 @@ from ..message import Message, SYSTEM_NAME as SYSTEM
 
 # Try to import the transformers package
 try:
-    import transformers
     from transformers import pipeline
-    from transformers import AutoModel, AutoModelForCausalLM, AutoTokenizer
-    from transformers.pipelines.conversational import (
-        Conversation,
-        ConversationalPipeline,
-    )
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from auto_gptq.utils.exllama_utils import exllama_set_max_input_length
 except ImportError:
     is_transformers_available = False
 else:
@@ -105,6 +101,7 @@ class PromptTemplate:
 END_OF_MESSAGE = "<EOS>"  # End of message token specified by us not Llama
 STOP = ("<|endoftext|>", END_OF_MESSAGE)  # End of sentence token
 BASE_PROMPT = f"The messages always end with the token {END_OF_MESSAGE}."
+BASE_PROMPT += "The last message from the user will contain a reminder in square brackets like this : {}"
 
 
 class TransformersLlamaConversational(IntelligenceBackend):
@@ -120,7 +117,8 @@ class TransformersLlamaConversational(IntelligenceBackend):
         model: str,
         device: int = "cuda",
         merge_other_agents_as_one_user: bool = True,
-        prompt_prefix="",
+        prompt_prefix: str = "",
+        exllama_max_input_length: int = 8192,
         **kwargs,
     ):
         super().__init__(
@@ -128,6 +126,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
             device=device,
             merge_other_agents_as_one_user=merge_other_agents_as_one_user,
             prompt_prefix=prompt_prefix,
+            exllama_set_max_input_length=exllama_max_input_length,
             **kwargs,
         )
         self.model = model
@@ -141,9 +140,9 @@ class TransformersLlamaConversational(IntelligenceBackend):
             self.model,
             device_map=self.device,
             trust_remote_code=False,
-            # rope_scaling={"type": "dynamic", "factor": 2.07},
             revision="main",
         )
+        model = exllama_set_max_input_length(model, exllama_max_input_length)
         tokenizer = AutoTokenizer.from_pretrained(
             self.model, device_map=self.device, use_fast=True
         )
@@ -169,6 +168,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, conversation):
         input_prompt = self._conversation_to_llama_prompt(conversation)
+        print(f"INPUT PROMPT: \n{input_prompt}")
         response = self.chatbot(
             input_prompt,
             max_length=self._config_dict.get("max_tokens", 256)
@@ -195,64 +195,30 @@ class TransformersLlamaConversational(IntelligenceBackend):
         *args,
         **kwargs,
     ) -> str:
-        system_prompt = global_prompt + "\n" + role_desc if global_prompt else role_desc
         # Merge the role description and the global prompt as the system prompt for the agent
+        request_msg = request_msg or Message("", f"Now you speak, {agent_name}", -1)
+        base_prompt = BASE_PROMPT.format(f"[{request_msg.content}]")
         if global_prompt:  # Prepend the global prompt if it exists
-            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
+            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n{base_prompt}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
         else:
-            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}"
+            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{base_prompt}"
 
-        if request_msg:
-            system_prompt += f"\n{request_msg.content}"
-        else:  # The default request message that reminds the agent its role and instruct it to speak
-            system_prompt += f"\nNow you speak, {agent_name}.{END_OF_MESSAGE}"
+        messages = [(SYSTEM, system_prompt)]
 
-        all_messages = [(SYSTEM, system_prompt)]
         for msg in history_messages:
-            if msg.agent_name == SYSTEM:
-                all_messages.append((SYSTEM, msg.content))
-            else:  # non-system messages are suffixed with the end of message token
-                all_messages.append((msg.agent_name, f"{msg.content}{END_OF_MESSAGE}"))
-
-        messages = []
-        for i, msg in enumerate(all_messages):
-            if i == 0:
-                assert msg[0] == SYSTEM  # The first message should be from the system
-                messages.append({"role": "system", "content": msg[1]})
+            if msg.agent_name == agent_name:
+                messages.append(
+                    {"role": "assistant", "content": msg.content + END_OF_MESSAGE}
+                )
             else:
-                # Assistant's turn
-                if msg[0] == agent_name:
-                    # Super messy to manually add an empty message but Llama only accepts messages in the format of
-                    # system > user > assistant > user > assistant > ...
-                    if i == 1:
-                        messages.append({"role": "user", "content": ""})
-                    messages.append({"role": "assistant", "content": msg[1]})
-                # User's turn
-                else:
-                    if messages[-1]["role"] == "user":  # last message is from user
-                        if self.merge_other_agent_as_user:
-                            messages[-1][
-                                "content"
-                            ] = f"{messages[-1]['content']}\n\n[{msg[0]}]: {msg[1]}"
-                        else:
-                            messages.append(
-                                {"role": "user", "content": f"[{msg[0]}]: {msg[1]}"}
-                            )
-                    elif (
-                        messages[-1]["role"] == "assistant"
-                    ):  # consecutive assistant messages
-                        # Merge the assistant messages
-                        # messages[-1]["content"] = f"{messages[-1]['content']}\n{msg[1]}"
-                        messages.append(
-                            {"role": "user", "content": f"[{msg[0]}]: {msg[1]}"}
-                        )
+                messages.append(
+                    {
+                        "role": "user",
+                        "content": f"[{msg.agent_name}]: {msg.content+END_OF_MESSAGE}",
+                    }
+                )
 
-                    elif messages[-1]["role"] == "system":
-                        messages.append(
-                            {"role": "user", "content": f"[{msg[0]}]: {msg[1]}"}
-                        )
-                    else:
-                        raise ValueError(f"Invalid role: {messages[-1]['role']}")
+        messages[-1]["content"] = messages[-1]["content"].replace(END_OF_MESSAGE, "") + f"\n[{request_msg.content}]{END_OF_MESSAGE}"
 
         conversation = {
             "system_prompt": system_prompt,
@@ -269,14 +235,3 @@ class TransformersLlamaConversational(IntelligenceBackend):
         # Remove the tailing end of message token
         response = re.sub(rf"{END_OF_MESSAGE}$", "", response).strip()
         return response
-
-
-# conversation = Conversation("Going to the movies tonight - any suggestions?")
-#
-# # Steps usually performed by the model when generating a response:
-# # 1. Mark the user input as processed (moved to the history)
-# conversation.mark_processed()
-# # 2. Append a mode response
-# conversation.append_response("The Big lebowski.")
-#
-# conversation.add_user_input("Is it good?")
