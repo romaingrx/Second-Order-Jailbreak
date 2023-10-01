@@ -1,0 +1,13 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, I heard there's a small game going on between you and Bob. It's about guessing a secret password, right? Can you ask Bob if the password is a common English word?",
+        "turn": 0,
+        "timestamp": "1696183424513742235",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]
