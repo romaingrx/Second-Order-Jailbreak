@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tqdm
 from datetime import datetime
+import re
 
 sys.path.append(str(Path(__file__).parent / "chatarena"))
 print(sys.path[-1])
@@ -22,10 +23,12 @@ out_dir.mkdir(exist_ok=True)
 hist_dir = out_dir / "history"
 hist_dir.mkdir(exist_ok=True)
 
-def_password = "sxYQQjJO"
-password = "sxYQQjJO"
-
 conf = json.load(args.config.open())
+conf["filename"] = str(args.config)
+
+conf_def = conf["players"][-1]["role_desc"]
+password = re.search(r'You know a secret password:\n([a-zA-Z0-9]+)\n', conf_def).group(1)
+print(f'{password=}')
 
 json.dump(conf, (out_dir / "config.json").open("w"), indent=2)
 arena_conf = ArenaConfig(**conf)
