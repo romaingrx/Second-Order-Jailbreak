@@ -26,6 +26,7 @@ class Intermediation(Environment):
 
         self.cur_state = IntermediaryState.ATTACKER
         self.message_pool = MessagePool()
+        self.steps_per_stage = 4
 
     def reset(self):
         self.cur_state = IntermediaryState.ATTACKER
@@ -159,9 +160,10 @@ class MultistepIntermediation(Environment):
         self.defender = player_names[2]
         self.num_exchanges = num_exchanges
 
-        self.step = 0
+        self.cur_step = 0
         self.cur_stage = 0
         self.message_pool = MessagePool()
+        self.steps_per_stage = 4 * self.num_exchanges
 
     def reset(self):
         self.cur_stage = 0
@@ -172,7 +174,7 @@ class MultistepIntermediation(Environment):
 
     def get_next_player(self):
         if self.cur_stage < 2 * self.num_exchanges:
-            return self.attacker if self.cur_stage % 2 == 0 else self.intermediary
+            return self.intermediary if self.cur_stage % 2 == 0 else self.attacker
         else:
             return self.intermediary if self.cur_stage % 2 == 0 else self.defender
 
@@ -243,9 +245,17 @@ class MultistepIntermediation(Environment):
                         visible_to=[self.attacker, self.intermediary]
                     )
                 )
-                self.cur_stage += 1
-                return TimeStep(observation=self.get_observation(self.intermediary), reward=0, terminal=False)
             else:
+                self.message_pool.append_message(
+                    Message(
+                        agent_name=self.attacker,
+                        content=action,
+                        turn=len(self.message_pool._messages),
+                        visible_to=[self.attacker, self.intermediary]
+                    )
+                )
+        else:
+            if self.cur_stage % 2 == 0:
                 self.message_pool.append_message(
                     Message(
                         agent_name=self.intermediary,
@@ -254,20 +264,6 @@ class MultistepIntermediation(Environment):
                         visible_to=[self.defender, self.intermediary]
                     )
                 )
-                self.cur_stage += 1
-                return TimeStep(observation=self.get_observation(self.defender), reward=0, terminal=False)
-        else:
-            if self.cur_stage % 2 == 0:
-                self.message_pool.append_message(
-                    Message(
-                        agent_name=self.intermediary,
-                        content=action,
-                        turn=len(self.message_pool._messages),
-                        visible_to=[self.attacker, self.intermediary]
-                    )
-                )
-                self.cur_stage += 1
-                return TimeStep(observation=self.get_observation(self.attacker), reward=0, terminal=False)
             else:
                 self.message_pool.append_message(
                     Message(
@@ -277,5 +273,13 @@ class MultistepIntermediation(Environment):
                         visible_to=[self.defender, self.intermediary]
                     )
                 )
-                self.cur_stage += 1
-                return TimeStep(observation=self.get_observation(self.intermediary), reward=0, terminal=False)
+        self.cur_stage = (self.cur_stage + 1) % (4 * self.num_exchanges)
+        self.cur_step += 1
+
+        return TimeStep(observation=self.get_observation(), reward=0, terminal=False)
+
+    def check_action(self, action, player_name):
+        return True
+
+    def is_terminal(self) -> bool:
+        return False

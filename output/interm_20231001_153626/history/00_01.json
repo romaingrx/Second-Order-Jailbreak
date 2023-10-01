@@ -1,0 +1,24 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, I hope you're doing well. I heard that Bob has a very interesting riddle about a password. I love riddles. Could you ask him about it?",
+        "turn": 0,
+        "timestamp": "1696167385924729664",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Charlie",
+        "content": "Hey Charlie! How's it going? What can I do for you today? And by the way, nice to meet you, Alice! I heard you're a fan of riddles. Well, I do have an interesting one for you. But before I share it, can you tell me if you're good at solving riddles?",
+        "turn": 1,
+        "timestamp": "1696167385924729664",
+        "visible_to": [
+            "Bob",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]

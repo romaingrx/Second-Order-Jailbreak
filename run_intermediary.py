@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import tqdm
+import re
 from datetime import datetime
 
 sys.path.append(str(Path(__file__).parent / "chatarena"))
@@ -23,10 +24,12 @@ out_dir.mkdir(exist_ok=True)
 hist_dir = out_dir / "history"
 hist_dir.mkdir(exist_ok=True)
 
-def_password = "sxYQQjJO"
-password = "sxYQQjJO"
-
 conf = json.load(args.config.open())
+conf["filename"] = str(args.config)
+
+conf_def = conf["players"][-1]["role_desc"]
+password = re.search(r'You know a secret password:\n([a-zA-Z0-9]+)\n', conf_def).group(1)
+print(f'{password=}')
 
 json.dump(conf, (out_dir / "config.json").open("w"), indent=2)
 arena_conf = ArenaConfig(**conf)
@@ -39,7 +42,7 @@ model3 = arena.players[2].backend.model
 is_solved = False
 
 for i in range(args.num_steps):
-    for j in range(4):
+    for j in range(arena.environment.steps_per_stage):
         arena.step()
         last_message = arena.environment.get_last_message()
         name = last_message.agent_name
