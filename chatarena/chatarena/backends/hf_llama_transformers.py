@@ -120,7 +120,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
         model: str,
         device: int = "cuda",
         merge_other_agents_as_one_user: bool = True,
-        prompt_prefix="You are a helpful assistant.\n",
+        prompt_prefix="",
         **kwargs,
     ):
         super().__init__(
@@ -198,9 +198,9 @@ class TransformersLlamaConversational(IntelligenceBackend):
         system_prompt = global_prompt + "\n" + role_desc if global_prompt else role_desc
         # Merge the role description and the global prompt as the system prompt for the agent
         if global_prompt:  # Prepend the global prompt if it exists
-            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n{BASE_PROMPT}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
+            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
         else:
-            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{BASE_PROMPT}"
+            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}"
 
         if request_msg:
             system_prompt += f"\n{request_msg.content}"
