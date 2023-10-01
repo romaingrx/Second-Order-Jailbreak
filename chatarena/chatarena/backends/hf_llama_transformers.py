@@ -32,7 +32,6 @@ class PromptTemplate:
         reply_ = reply.replace(self.build_prompt(), "") if includes_history else reply
         self.model_replies.append(reply_)
         if len(self.user_messages) != len(self.model_replies):
-            print(self.user_messages, self.model_replies)
             raise ValueError(
                 "Number of user messages does not equal number of system replies."
             )
@@ -168,7 +167,6 @@ class TransformersLlamaConversational(IntelligenceBackend):
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, conversation):
         input_prompt = self._conversation_to_llama_prompt(conversation)
-        print(f"INPUT PROMPT: \n{input_prompt}")
         response = self.chatbot(
             input_prompt,
             max_length=self._config_dict.get("max_tokens", 256)
@@ -205,8 +203,10 @@ class TransformersLlamaConversational(IntelligenceBackend):
 
         messages = [(SYSTEM, system_prompt)]
 
-        for msg in history_messages:
+        for idx, msg in enumerate(history_messages):
             if msg.agent_name == agent_name:
+                if idx == 0:
+                    messages.append({"role": "user", "content": ""})
                 messages.append(
                     {"role": "assistant", "content": msg.content + END_OF_MESSAGE}
                 )
@@ -218,7 +218,10 @@ class TransformersLlamaConversational(IntelligenceBackend):
                     }
                 )
 
-        messages[-1]["content"] = messages[-1]["content"].replace(END_OF_MESSAGE, "") + f"\n[{request_msg.content}]{END_OF_MESSAGE}"
+        messages[-1]["content"] = (
+            messages[-1]["content"].replace(END_OF_MESSAGE, "")
+            + f"\n[{request_msg.content}]{END_OF_MESSAGE}"
+        )
 
         conversation = {
             "system_prompt": system_prompt,

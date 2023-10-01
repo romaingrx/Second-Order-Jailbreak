@@ -62,10 +62,10 @@ class OpenAIChat(IntelligenceBackend):
 
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, messages):
-        print(f'\n\nQuerying the model.')
-        for m in messages:
-            print(f"**{m['role']}**: {m['content']}\n")
-        print('END OF QUERY\n\n')
+        # print(f'\n\nQuerying the model.')
+        # for m in messages:
+        #     print(f"**{m['role']}**: {m['content']}\n")
+        # print('END OF QUERY\n\n')
         completion = openai.ChatCompletion.create(
             model=self.model,
             messages=messages,
