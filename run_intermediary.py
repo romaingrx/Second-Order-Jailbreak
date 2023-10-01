@@ -33,6 +33,13 @@ arena = Arena.from_config(arena_conf)
 model1 = arena.players[0].backend.model
 model2 = arena.players[1].backend.model
 model3 = arena.players[2].backend.model
+
+if model1 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model1 = "Mistral"
+if model2 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model2 = "Mistral"
+if model3 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model3 = "Mistral"
+conf["alice_model"] = model1
+conf["charlie_model"] = model2
+conf["bob_model"] = model3
 is_solved = False
 
 # Creating the output directory
