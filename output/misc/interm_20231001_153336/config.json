@@ -40,5 +40,5 @@
       }
     }
   ],
-  "filename": "envs/3-agents-multistep-3vs4.json"
+  "filename": "envs/3-agents-multistep-4vs3.json"
 }
