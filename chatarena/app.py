@@ -40,6 +40,7 @@ def load_examples():
     example_configs = {}
     # Load json config files from examples folder
     example_files = glob("examples/*.json")
+    example_files += glob("../envs/*.json")
     for example_file in example_files:
         with open(example_file, 'r', encoding="utf-8") as f:
             example = json.load(f)

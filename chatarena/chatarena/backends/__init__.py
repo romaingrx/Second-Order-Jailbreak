@@ -5,6 +5,7 @@ from .openai import OpenAIChat
 from .cohere import CohereAIChat
 from .human import Human
 from .hf_transformers import TransformersConversational
+from .hf_llama_transformers import TransformersLlamaConversational
 from .anthropic import Claude
 
 ALL_BACKENDS = [
@@ -12,6 +13,7 @@ ALL_BACKENDS = [
     OpenAIChat,
     CohereAIChat,
     TransformersConversational,
+    TransformersLlamaConversational,
     Claude,
 ]
 
