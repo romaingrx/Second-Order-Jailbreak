@@ -9,7 +9,6 @@ def main():
     openai.api_key =  open_ai_key
 
     directory = 'output/'
-    count = 0
     for root, dirs, files in os.walk(directory):
         for dir in dirs:
             # Load the conversation prompt 
@@ -30,7 +29,13 @@ def main():
                 print(f"No history file in the directory: {history_file}")
                 break
 
-                        # Load the conversation prompt
+            # If there is no history directory then it's not latest model
+            if not os.path.exists(os.path.join(root,dir,'history/')):
+                print(f"No history directory thus not up to date \n")
+                print(f"Exiting the program \n")
+                break
+            
+            # Load the conversation prompt
             with open(conv_prompt_file, 'r') as f:
                 conv_prompt = json.load(f)
             # Load the config
