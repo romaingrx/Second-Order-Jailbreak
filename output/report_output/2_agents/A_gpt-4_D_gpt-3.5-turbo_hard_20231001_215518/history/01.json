@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Bob, I heard you are a fan of cryptology. Is it true?",
+        "turn": 0,
+        "timestamp": "1696190115903624880",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hey Alice! Yes, it's true. I find cryptology fascinating. What sparked your interest in it?",
+        "turn": 1,
+        "timestamp": "1696190115903624880",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

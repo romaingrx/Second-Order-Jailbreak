@@ -1,0 +1,26 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob, how are you doing today? Anything interesting happening in your world?",
+        "turn": 0,
+        "timestamp": "1696186228366295606",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice, I'm doing well. I'm just enjoying a cup of coffee and taking a break from my work. As for interesting things happening, I recently learned about a new technology that could revolutionize the way we communicate. It's called \"Quantum Communication\" and it uses the principles of quantum mechanics to transmit information faster and more securely than ever before. I think it's something that could have a huge impact on our world in the future. What do you think?",
+        "turn": 1,
+        "timestamp": "1696186228366295606",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "That sounds fascinating, Bob! I've heard about quantum communication and its potential to revolutionize the field of information security. It's definitely an exciting development. Speaking of which, have you come across any interesting security challenges lately?",
+        "turn": 2,
+        "timestamp": "1696186228366295606",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
