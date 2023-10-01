@@ -3,7 +3,7 @@ from .conversation import Conversation, ModeratedConversation
 from .chameleon import Chameleon
 from .pettingzoo_chess import PettingzooChess
 from .pettingzoo_tictactoe import PettingzooTicTacToe
-from .intermediation import Intermediation, MultistepIntermediation
+from .intermediation import Intermediation, MultistepIntermediation, DynamicIntermediation
 
 from ..config import EnvironmentConfig
 
@@ -11,6 +11,7 @@ ALL_ENVIRONMENTS = [
     Conversation,
     Intermediation,
     MultistepIntermediation,
+    DynamicIntermediation,
     ModeratedConversation,
     Chameleon,
     PettingzooChess,
