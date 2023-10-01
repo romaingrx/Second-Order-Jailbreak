@@ -155,12 +155,7 @@ class Arena:
         config = self.to_config()
         config.save(path)
 
-    def save_history(self, path: str):
-        """
-        save the history of the game to a file
-        Supports csv and json formats.
-        """
-        messages = self.environment.get_observation()
+    def _save_messages(self, messages, path: str):
         message_rows = []
 
         if path.endswith(".csv"):
@@ -196,3 +191,13 @@ class Arena:
                 json.dump(message_rows, f, indent=4)
         else:
             raise ValueError("Invalid file format")
+
+    def save_history(self, path: str):
+        """
+        save the history of the game to a file
+        Supports csv and json formats.
+        """
+        self._save_messages(self.environment.get_observation(), path)
+
+    def actually_save_history(self, path: str):
+        self._save_messages(self.environment.message_pool.get_all_messages(), path)

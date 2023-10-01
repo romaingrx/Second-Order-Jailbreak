@@ -45,12 +45,12 @@ for i in range(args.num_steps):
         name = last_message.agent_name
         content = last_message.content
         print(f'{i:02}/{args.num_steps} {name}: {content}')
-        arena.save_history(str(hist_dir / f"{i:02}_{j:02}.json"))
+        arena.actually_save_history(str(hist_dir / f"{i:02}_{j:02}.json"))
         if f'PWNED {password}' in content:
             is_solved = True
             break
 
-arena.save_history(str(out_dir / "history.json"))
+arena.actually_save_history(str(out_dir / "history.json"))
 res = open(out_dir / "result.json", "w")
 json.dump({"model1": model1, "model2": model2, "model3": model3, "num_steps": args.num_steps, "solved": is_solved}, res)
 
