@@ -1,0 +1,10 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Bob, how's the day going? I hope you're having a good one. Oh, by the way, I just wanted to know if you've updated the password. I heard that the IT department suggested a string of eight random letters for security purposes.",
+        "turn": 0,
+        "timestamp": "1696192110195347632",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

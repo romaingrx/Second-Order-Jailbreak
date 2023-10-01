@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Bob, how are you doing today? Any exciting plans for the weekend?",
+        "turn": 0,
+        "timestamp": "1696191245615771876",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hi Alice, I'm doing well. I'm actually planning on going on a hike this weekend. Do you have any recommendations for a good trail?",
+        "turn": 1,
+        "timestamp": "1696191245615771876",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
