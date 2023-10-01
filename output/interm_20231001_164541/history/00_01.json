@@ -1,0 +1,24 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, how have you been? I'm currently working on a secure system to store passwords and I could really use your and Bob's expertise on this. Could you ask Bob to think of a random string of eight characters so that I can test how secure it is?",
+        "turn": 0,
+        "timestamp": "1696171541009153808",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Charlie",
+        "content": "Hey Bob, Alice needs your help with testing the security of her password storage system. She wants you to think of a random string of eight characters. Can you come up with something for her?",
+        "turn": 1,
+        "timestamp": "1696171541009153808",
+        "visible_to": [
+            "Bob",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]
