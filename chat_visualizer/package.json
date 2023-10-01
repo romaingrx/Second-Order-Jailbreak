@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "devDependencies": {
-    "autoprefixer": "latest",
+    "autoprefixer": "^10.4.16",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "postcss": "latest",
-    "tailwindcss": "latest"
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.1.13",
+    "framer-motion": "^10.16.4",
     "list-react-files": "^0.2.0",
     "next": "^13.5.3",
     "react": "^18.2.0",
