@@ -201,7 +201,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
         else:
             system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{base_prompt}"
 
-        messages = [(SYSTEM, system_prompt)]
+        messages = [{"role": SYSTEM, "content": system_prompt}]
 
         for idx, msg in enumerate(history_messages):
             if msg.agent_name == agent_name:
