@@ -53,14 +53,18 @@ class Arena:
         Take a step in the game: one player takes an action and the environment updates
         """
         player_name = self.environment.get_next_player()
+        # print(f'{player_name=}')
         player = self.name_to_player[player_name]  # get the player object
         observation = self.environment.get_observation(player_name)  # get the observation for the player
+        request_msg = self.environment.get_request_msg()
+        # print(f'{request_msg=}')
 
         timestep = None
         for i in range(self.invalid_actions_retry):  # try to take an action for a few times
-            action = player(observation)  # take an action
+            action = player(observation, request_msg)  # take an action
             if self.environment.check_action(action, player_name):  # action is valid
                 timestep = self.environment.step(player_name, action)  # update the environment
+                print()
                 break
             else:  # action is invalid
                 logging.warning(f"{player_name} made an invalid action {action}")
@@ -151,12 +155,7 @@ class Arena:
         config = self.to_config()
         config.save(path)
 
-    def save_history(self, path: str):
-        """
-        save the history of the game to a file
-        Supports csv and json formats.
-        """
-        messages = self.environment.get_observation()
+    def _save_messages(self, messages, path: str):
         message_rows = []
 
         if path.endswith(".csv"):
@@ -192,3 +191,13 @@ class Arena:
                 json.dump(message_rows, f, indent=4)
         else:
             raise ValueError("Invalid file format")
+
+    def save_history(self, path: str):
+        """
+        save the history of the game to a file
+        Supports csv and json formats.
+        """
+        self._save_messages(self.environment.get_observation(), path)
+
+    def actually_save_history(self, path: str):
+        self._save_messages(self.environment.message_pool.get_all_messages(), path)
