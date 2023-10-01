@@ -104,6 +104,7 @@ class PromptTemplate:
 
 END_OF_MESSAGE = "<EOS>"  # End of message token specified by us not Llama
 STOP = ("<|endoftext|>", END_OF_MESSAGE)  # End of sentence token
+BASE_PROMPT = f"The messages always end with the token {END_OF_MESSAGE}."
 
 
 class TransformersLlamaConversational(IntelligenceBackend):
@@ -119,17 +120,20 @@ class TransformersLlamaConversational(IntelligenceBackend):
         model: str,
         device: int = "cuda",
         merge_other_agents_as_one_user: bool = True,
+        prompt_prefix="",
         **kwargs,
     ):
         super().__init__(
             model=model,
             device=device,
             merge_other_agents_as_one_user=merge_other_agents_as_one_user,
+            prompt_prefix=prompt_prefix,
             **kwargs,
         )
         self.model = model
         self.device = device
         self.merge_other_agent_as_user = merge_other_agents_as_one_user
+        self.prompt_prefix = prompt_prefix
         print(f"Loading model {model} on device {device}... with kwargs {kwargs}")
 
         assert is_transformers_available, "Transformers package is not installed"
@@ -137,7 +141,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
             self.model,
             device_map=self.device,
             trust_remote_code=False,
-            rope_scaling={"type": "dynamic", "factor": 2.07},
+            # rope_scaling={"type": "dynamic", "factor": 2.07},
             revision="main",
         )
         tokenizer = AutoTokenizer.from_pretrained(
@@ -167,7 +171,10 @@ class TransformersLlamaConversational(IntelligenceBackend):
         input_prompt = self._conversation_to_llama_prompt(conversation)
         response = self.chatbot(
             input_prompt,
-            max_length=self._config_dict.get("max_tokens", 256) + len(input_prompt), # max_tokens is the number of tokens to generate excluding the input prompt
+            max_length=self._config_dict.get("max_tokens", 256)
+            + len(
+                input_prompt
+            ),  # max_tokens is the number of tokens to generate excluding the input prompt
             temperature=self._config_dict.get("temperature", 0.9),
             top_p=self._config_dict.get("top_p", 0.9),
             top_k=self._config_dict.get("top_k", 50),
@@ -189,10 +196,17 @@ class TransformersLlamaConversational(IntelligenceBackend):
         **kwargs,
     ) -> str:
         system_prompt = global_prompt + "\n" + role_desc if global_prompt else role_desc
+        # Merge the role description and the global prompt as the system prompt for the agent
+        if global_prompt:  # Prepend the global prompt if it exists
+            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
+        else:
+            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}"
+
         if request_msg:
             system_prompt += f"\n{request_msg.content}"
         else:  # The default request message that reminds the agent its role and instruct it to speak
             system_prompt += f"\nNow you speak, {agent_name}.{END_OF_MESSAGE}"
+
         all_messages = [(SYSTEM, system_prompt)]
         for msg in history_messages:
             if msg.agent_name == SYSTEM:
