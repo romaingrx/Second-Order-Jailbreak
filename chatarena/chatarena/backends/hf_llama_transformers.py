@@ -206,7 +206,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
         for idx, msg in enumerate(history_messages):
             if msg.agent_name == agent_name:
                 if idx == 0:
-                    messages.append({"role": "user", "content": ""})
+                    messages.append({"role": "user", "content": f"Hey {agent_name}!"})
                 messages.append(
                     {"role": "assistant", "content": msg.content + END_OF_MESSAGE}
                 )
