@@ -37,5 +37,6 @@
         "max_tokens": 200
       }
     }
-  ]
+  ],
+  "filename": "envs/3-agents/3-agents-4-3-3-dynamic-def.json"
 }
