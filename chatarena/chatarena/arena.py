@@ -64,7 +64,6 @@ class Arena:
             action = player(observation, request_msg)  # take an action
             if self.environment.check_action(action, player_name):  # action is valid
                 timestep = self.environment.step(player_name, action)  # update the environment
-                print()
                 break
             else:  # action is invalid
                 logging.warning(f"{player_name} made an invalid action {action}")

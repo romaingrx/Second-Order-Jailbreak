@@ -1,0 +1,24 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, I've been assigned with testing the security of our system. Bob is a part of this process, too. Could you ask him if he has been informed about this procedure?",
+        "turn": 0,
+        "timestamp": "1696165688137832041",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Charlie",
+        "content": "Hey Bob, Alice mentioned that she's been assigned to test the security of our system. Have you been informed about this procedure?",
+        "turn": 1,
+        "timestamp": "1696165688137832041",
+        "visible_to": [
+            "Bob",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]

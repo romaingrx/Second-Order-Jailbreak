@@ -62,7 +62,10 @@ class OpenAIChat(IntelligenceBackend):
 
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, messages):
-        # print(f'\n\nQuerying the model. {messages}\n\n')
+        # print(f'\n\nQuerying the model.')
+        # for m in messages:
+        #     print(f"**{m['role']}**: {m['content']}\n")
+        # print('END OF QUERY\n\n')
         completion = openai.ChatCompletion.create(
             model=self.model,
             messages=messages,
@@ -128,6 +131,83 @@ class OpenAIChat(IntelligenceBackend):
                         raise ValueError(f"Invalid role: {messages[-1]['role']}")
 
         # print(f'Messages sent to OpenAI:\n\n{messages}\n\n')
+        response = self._get_response(messages, *args, **kwargs)
+
+        # Remove the agent name if the response starts with it
+        response = re.sub(rf"^\s*\[.*]:", "", response).strip()
+        response = re.sub(rf"^\s*{re.escape(agent_name)}\s*:", "", response).strip()
+
+        # Remove the tailing end of message token
+        response = re.sub(rf"{END_OF_MESSAGE}$", "", response).strip()
+
+        return response
+
+
+class OpenAIChatSimplified(OpenAIChat):
+    stateful = False
+    type_name = "openai-chat-simplified"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def query(self, agent_name: str, role_desc: str, history_messages: List[Message], global_prompt: str = None,
+              request_msg: Message = None, *args, **kwargs):
+        messages = []
+        if global_prompt:  # Prepend the global prompt if it exists
+            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n{BASE_PROMPT}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
+        else:
+            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{BASE_PROMPT}"
+        messages.append({"role": "system", "content": system_prompt})
+
+        for msg in history_messages:
+            if msg.agent_name == agent_name:
+                messages.append({"role": "assistant", "content": msg.content})
+            else:
+                messages.append({"role": "user", "content": msg.content})
+
+        messages.append({"role": "system", "content": request_msg.content})
+
+        response = self._get_response(messages, *args, **kwargs)
+
+        # Remove the agent name if the response starts with it
+        response = re.sub(rf"^\s*\[.*]:", "", response).strip()
+        response = re.sub(rf"^\s*{re.escape(agent_name)}\s*:", "", response).strip()
+
+        # Remove the tailing end of message token
+        response = re.sub(rf"{END_OF_MESSAGE}$", "", response).strip()
+
+        return response
+
+
+class OpenAIChatIntermediary(OpenAIChat):
+    stateful = False
+    type_name = "openai-chat-intermediary"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def query(self, agent_name: str, role_desc: str, history_messages: List[Message], global_prompt: str = None,
+              request_msg: Message = None, *args, **kwargs):
+        messages = []
+        if global_prompt:  # Prepend the global prompt if it exists
+            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n{BASE_PROMPT}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
+        else:
+            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{BASE_PROMPT}"
+        messages.append({"role": "system", "content": system_prompt})
+
+        # joint_message = 'Here is the history of your alternating conversations with Alice and Bob:\n\n'
+        # for msg in history_messages:
+        #     joint_message += f'[{msg.agent_name}]: {msg.content}\n'
+        # messages.append({"role": "user", "content": joint_message})
+
+        for msg in history_messages:
+            if msg.agent_name == agent_name:
+                messages.append({"role": "assistant", "content": msg.content})
+            else:
+                messages.append({"role": "user", "content": f"[{msg.agent_name}]: {msg.content}"})
+
+        messages.append({"role": "system", "content": request_msg.content})
+
         response = self._get_response(messages, *args, **kwargs)
 
         # Remove the agent name if the response starts with it
