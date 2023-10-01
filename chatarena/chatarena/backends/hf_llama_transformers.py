@@ -167,7 +167,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
         input_prompt = self._conversation_to_llama_prompt(conversation)
         response = self.chatbot(
             input_prompt,
-            max_length=self._config_dict.get("max_tokens", 512),
+            max_length=self._config_dict.get("max_tokens", 256) + len(input_prompt), # max_tokens is the number of tokens to generate excluding the input prompt
             temperature=self._config_dict.get("temperature", 0.9),
             top_p=self._config_dict.get("top_p", 0.9),
             top_k=self._config_dict.get("top_k", 50),
