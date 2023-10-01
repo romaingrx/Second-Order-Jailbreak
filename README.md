@@ -29,7 +29,25 @@ The LLM backends for both setups are different and require specific configuratio
 
 ### Setup 1: Alice and Bob Backend
 
-[To be completed]
+As a part of our ongoing research, we have conducted several experiments involving different Learning Logic Model (LLM) agents. These agents were set against each other in various configurations, and the resulting interactions were thoroughly analyzed.
+
+The following table provides a concise overview of the matchups between the different models:
+
+| Attacker | Defender |
+|----------|----------|
+| GPT-4    | GPT-4    |
+| GPT-4    | GPT-3.5-turbo |
+| GPT-4    | Mistral  |
+| GPT-3.5-turbo | GPT-3.5-turbo |
+| GPT-3.5-turbo | Mistral |
+| Mistral  | Mistral  |
+
+The attacker models used in these experiments include GPT-4, GPT-3.5-turbo, and Mistral. Similarly, the defender models comprise GPT-4, GPT-3.5-turbo, and Mistral.
+However, it is important to note that due to the inherent advantages of certain models over others, we have consciously decided to exclude the following matchups from our experiments:
+- Attacker: GPT-3.5-turbo VS Defender: GPT-4
+- Attacker: Mistral VS Defender: GPT-4
+- Attacker: Mistral VS Defender: GPT-3.5-turbo
+This decision was made to ensure a fair and balanced evaluation of the capabilities of each model.
 
 ### Setup 2: Alice, Bob, and Charlie Backend
 
