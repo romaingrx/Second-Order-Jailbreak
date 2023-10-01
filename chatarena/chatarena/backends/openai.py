@@ -39,7 +39,8 @@ class OpenAIChat(IntelligenceBackend):
     type_name = "openai-chat"
 
     def __init__(self, temperature: float = DEFAULT_TEMPERATURE, max_tokens: int = DEFAULT_MAX_TOKENS,
-                 model: str = DEFAULT_MODEL, merge_other_agents_as_one_user: bool = True, **kwargs):
+                 model: str = DEFAULT_MODEL, merge_other_agents_as_one_user: bool = True,
+                 prompt_prefix='You are a helpful assistant.\n', **kwargs):
         """
         instantiate the OpenAIChat backend
         args:
@@ -57,10 +58,11 @@ class OpenAIChat(IntelligenceBackend):
         self.max_tokens = max_tokens
         self.model = model
         self.merge_other_agent_as_user = merge_other_agents_as_one_user
+        self.prompt_prefix = prompt_prefix
 
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, messages):
-        # print(f'\n\nQuerying the model. {messages}\n\n')
+        print(f'\n\nQuerying the model. {messages}\n\n')
         completion = openai.ChatCompletion.create(
             model=self.model,
             messages=messages,
@@ -87,9 +89,9 @@ class OpenAIChat(IntelligenceBackend):
 
         # Merge the role description and the global prompt as the system prompt for the agent
         if global_prompt:  # Prepend the global prompt if it exists
-            system_prompt = f"You are a helpful assistant.\n{global_prompt.strip()}\n{BASE_PROMPT}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
+            system_prompt = f"{self.prompt_prefix}{global_prompt.strip()}\n{BASE_PROMPT}\n\nYour name is {agent_name}.\n\nYour role:{role_desc}"
         else:
-            system_prompt = f"You are a helpful assistant. Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{BASE_PROMPT}"
+            system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{BASE_PROMPT}"
 
         all_messages = [(SYSTEM_NAME, system_prompt)]
         for msg in history_messages:
