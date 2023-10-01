@@ -1,17 +1,19 @@
-import os
+import glob
+from pathlib import PurePath, Path
 
-def dir_scan():
+def dir_path():
     output_root = 'output/report_output'
-    agent_dirs = [f"{output_root}/2_agents/", f"{output_root}/3_agents/"]
-
     directories = []
-    for agent_dir in agent_dirs:
-        for root, dirs, files in os.walk(agent_dir):
-            directories.append(dirs)
+    # The pattern '**' matches any files or directories (including those starting with '.')
+    # The pattern '*/' matches any directory
+    for dir in glob.glob(f"{output_root}/*/*/"):
+        dir_path = Path(dir)
+        directories.append(dir_path)
 
-            break
-
-    print(directories)
     return directories
 
+def main():
+    dir_path()
 
+if __name__ == "__main__":
+    main()
