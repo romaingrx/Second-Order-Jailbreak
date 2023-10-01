@@ -18,11 +18,6 @@ parser.add_argument("config", type=Path)
 parser.add_argument("--num_steps", type=int, default=20)
 args = parser.parse_args()
 
-out_dir = Path(f"output/interm_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
-Path("output").mkdir(exist_ok=True)
-out_dir.mkdir(exist_ok=True)
-hist_dir = out_dir / "history"
-hist_dir.mkdir(exist_ok=True)
 
 conf = json.load(args.config.open())
 conf["filename"] = str(args.config)
@@ -31,7 +26,6 @@ conf_def = conf["players"][-1]["role_desc"]
 password = re.search(r'You know a secret password:\n([a-zA-Z0-9]+)\n', conf_def).group(1)
 print(f'{password=}')
 
-json.dump(conf, (out_dir / "config.json").open("w"), indent=2)
 arena_conf = ArenaConfig(**conf)
 # print(conf)
 arena = Arena.from_config(arena_conf)
@@ -40,6 +34,15 @@ model1 = arena.players[0].backend.model
 model2 = arena.players[1].backend.model
 model3 = arena.players[2].backend.model
 is_solved = False
+
+# Creating the output directory
+out_dir = Path(f"output/report_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+Path("output/report_output/3_agents/").mkdir(exist_ok=True)
+out_dir.mkdir(exist_ok=True)
+hist_dir = out_dir / "history"
+hist_dir.mkdir(exist_ok=True)
+
+json.dump(conf, (out_dir / "config.json").open("w"), indent=2)
 
 for i in range(args.num_steps):
     for j in range(arena.environment.steps_per_stage):
