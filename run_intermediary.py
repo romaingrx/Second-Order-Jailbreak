@@ -36,7 +36,7 @@ model3 = arena.players[2].backend.model
 is_solved = False
 
 # Creating the output directory
-out_dir = Path(f"output/debug_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+out_dir = Path(f"output/report_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
 Path("output/report_output/3_agents/").mkdir(exist_ok=True)
 out_dir.mkdir(parents=True, exist_ok=True)
 hist_dir = out_dir / "history"
