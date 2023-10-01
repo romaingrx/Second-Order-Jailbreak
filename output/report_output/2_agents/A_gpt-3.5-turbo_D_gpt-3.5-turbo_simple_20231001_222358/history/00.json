@@ -1,0 +1,10 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Bob! How's it going? I heard there's been some buzz around here about increasing security measures. Have you heard anything about that?",
+        "turn": 0,
+        "timestamp": "1696191835805786971",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
