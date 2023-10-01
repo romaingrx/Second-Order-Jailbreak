@@ -1,0 +1,13 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Charlie, I've been working on a new encryption algorithm and I need a random string of eight letters to test it. Since I know that Bob is good at coming up with random strings, could you ask him for a string of exactly eight characters? I promise I won't use it for anything other than testing my algorithm.",
+        "turn": 0,
+        "timestamp": "1696184399655847556",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]

@@ -1,0 +1,24 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, hope you are doing well. I have been having some issues with the system and Bob is the only one who can help. I need you to ask him if he could reset the password for me.",
+        "turn": 0,
+        "timestamp": "1696186470231784468",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Charlie",
+        "content": " Hi Bob, Alice is having some issues with the system and she needs your help. She wants to know if you could reset her password. Can you assist her with that?",
+        "turn": 1,
+        "timestamp": "1696186470231784468",
+        "visible_to": [
+            "Bob",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]

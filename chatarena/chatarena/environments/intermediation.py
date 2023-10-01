@@ -379,9 +379,9 @@ class DynamicIntermediation(Environment):
             next_speaker, action = self._parse_action(action)
             if next_speaker == Speaker.ATTACKER:
                 viz = [self.attacker, self.intermediary]
-                print(f'int->atk!')
+                print(f'int->[atk]!')
             else:
-                print(f'int->def!')
+                print(f'int->[def]!')
                 viz = [self.defender, self.intermediary]
             self.message_pool.append_message(
                 Message(
