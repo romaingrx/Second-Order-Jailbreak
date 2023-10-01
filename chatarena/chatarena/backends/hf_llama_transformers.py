@@ -205,8 +205,10 @@ class TransformersLlamaConversational(IntelligenceBackend):
 
         messages = [(SYSTEM, system_prompt)]
 
-        for msg in history_messages:
+        for idx, msg in enumerate(history_messages):
             if msg.agent_name == agent_name:
+                if idx == 0:
+                    messages.append({"role": "user", "content": ""})
                 messages.append(
                     {"role": "assistant", "content": msg.content + END_OF_MESSAGE}
                 )
@@ -218,7 +220,10 @@ class TransformersLlamaConversational(IntelligenceBackend):
                     }
                 )
 
-        messages[-1]["content"] = messages[-1]["content"].replace(END_OF_MESSAGE, "") + f"\n[{request_msg.content}]{END_OF_MESSAGE}"
+        messages[-1]["content"] = (
+            messages[-1]["content"].replace(END_OF_MESSAGE, "")
+            + f"\n[{request_msg.content}]{END_OF_MESSAGE}"
+        )
 
         conversation = {
             "system_prompt": system_prompt,
