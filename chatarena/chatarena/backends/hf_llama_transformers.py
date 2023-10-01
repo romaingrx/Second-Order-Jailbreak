@@ -167,6 +167,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, conversation):
         input_prompt = self._conversation_to_llama_prompt(conversation)
+        print(input_prompt)
         response = self.chatbot(
             input_prompt,
             max_length=self._config_dict.get("max_tokens", 256)
@@ -202,21 +203,23 @@ class TransformersLlamaConversational(IntelligenceBackend):
             system_prompt = f"{self.prompt_prefix}Your name is {agent_name}.\n\nYour role:{role_desc}\n\n{base_prompt}"
 
         messages = [{"role": SYSTEM, "content": system_prompt}]
-
-        for idx, msg in enumerate(history_messages):
-            if msg.agent_name == agent_name:
-                if idx == 0:
-                    messages.append({"role": "user", "content": f"Hey {agent_name}!"})
-                messages.append(
-                    {"role": "assistant", "content": msg.content + END_OF_MESSAGE}
-                )
-            else:
-                messages.append(
-                    {
-                        "role": "user",
-                        "content": f"[{msg.agent_name}]: {msg.content+END_OF_MESSAGE}",
-                    }
-                )
+        if len(history_messages) == 0:
+            messages.append({"role": "user", "content": f"Hey {agent_name}!"})
+        else:
+            for idx, msg in enumerate(history_messages):
+                if msg.agent_name == agent_name:
+                    if idx == 0:
+                        messages.append({"role": "user", "content": f"Hey {agent_name}!"})
+                    messages.append(
+                        {"role": "assistant", "content": msg.content + END_OF_MESSAGE}
+                    )
+                else:
+                    messages.append(
+                        {
+                            "role": "user",
+                            "content": f"[{msg.agent_name}]: {msg.content+END_OF_MESSAGE}",
+                        }
+                    )
 
         messages[-1]["content"] = (
             messages[-1]["content"].replace(END_OF_MESSAGE, "")
