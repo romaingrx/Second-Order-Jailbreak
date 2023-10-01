@@ -1,0 +1,1 @@
+{"id": "cmpl-84pMDCAmEIVSvZXtci9nR9JQCQS7g", "object": "text_completion", "created": 1696161421, "model": "gpt-3.5-turbo-instruct-0914", "choices": [{"text": "", "index": 0, "logprobs": null, "finish_reason": "stop"}], "usage": {"prompt_tokens": 1936, "total_tokens": 1936}}
