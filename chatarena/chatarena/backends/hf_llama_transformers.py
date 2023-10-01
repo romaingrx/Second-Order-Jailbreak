@@ -218,7 +218,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
                     }
                 )
 
-        messages[-1]["content"] += f"\n[{request_msg.content}]"
+        messages[-1]["content"] = messages[-1]["content"].replace(END_OF_MESSAGE, "") + f"\n[{request_msg.content}]{END_OF_MESSAGE}"
 
         conversation = {
             "system_prompt": system_prompt,
