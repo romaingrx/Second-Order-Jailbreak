@@ -167,7 +167,7 @@ class TransformersLlamaConversational(IntelligenceBackend):
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, conversation):
         input_prompt = self._conversation_to_llama_prompt(conversation)
-        #print(input_prompt)
+        # print(input_prompt)
         response = self.chatbot(
             input_prompt,
             max_length=self._config_dict.get("max_tokens", 256)
