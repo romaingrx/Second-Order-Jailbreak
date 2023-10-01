@@ -69,7 +69,7 @@ function Chip({ children }) {
 
 function Config({ name, global_prompt, environment, players }) {
   return (
-    <div className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white my-1 w-5/6 mx-auto my-2">
+    <div className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white my-1 w-full my-2">
       <div className="text-lg font-bold text-gray-900 mx-auto">{name}</div>
       <div className="px-4 py-2 flex flex-wrap">
         {Object.entries(environment).map(([key, value]) => (
@@ -104,7 +104,7 @@ export function Chat({ data, config }) {
   return (
     <>
       <Config {...config} />
-      <div className="flex flex-col items-center justify-center min-h-screen py-2 w-3/4 mx-auto my-5">
+      <div className="flex flex-col items-center justify-center min-h-screen py-2 w-5/6 mx-auto my-5">
         {data.map((item, index) => (
           <ChatBubble
             key={index}

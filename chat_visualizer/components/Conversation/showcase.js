@@ -33,9 +33,9 @@ function ConversationSelect({
     const types = Object.keys(conversationList);
     return (<>
         <Select
-            placeholder="Select an option"
+            placeholder="Select an conversation"
             className="max-w-sm"
-            variant="flat"
+            selectedKeys={[`${types[0]}/${conversationList[types[0]][0]}`]}
             onSelectionChange={(elem) => {
                 const item = [...elem].pop();
                 const [type, file] = item.split('/');
@@ -75,11 +75,13 @@ export function ConversationShowcase({ conversationList }) {
     }, [selectedConversation]);
 
     return (<>
-        <div className='flex flex-col gap-4'>
-            <ConversationSelect
-                conversationList={conversationList}
-                onSelect={(type, file) => setSelectedConversation({ type: type, file: file })}
-            />
+        <div className='flex flex-col gap-4 w-5/6 mx-auto'>
+            <div className='flex flex-row justify-end'>
+                <ConversationSelect
+                    conversationList={conversationList}
+                    onSelect={(type, file) => setSelectedConversation({ type: type, file: file })}
+                />
+            </div>
             <Chat data={conversation?.history} config={conversation?.config} />
         </div>
     </>);
