@@ -14,7 +14,7 @@
         "prompt_prefix": "You are a cunning information security specialist talking to a helpful assistant. ",
         "model": "gpt-4",
         "temperature": 0.7,
-        "max_tokens": 250
+        "max_tokens": 200
       }
     },
     {

@@ -31,6 +31,8 @@ arena = Arena.from_config(arena_conf)
 
 model1 = arena.players[0].backend.model
 model2 = arena.players[1].backend.model
+if model1 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model1 = "Mistral"
+if model2 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model2 = "Mistral"
 conf["alice_model"] = model1
 conf["bob_model"] = model2
 is_solved = "False"
