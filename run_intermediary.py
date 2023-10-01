@@ -42,8 +42,16 @@ conf["charlie_model"] = model2
 conf["bob_model"] = model3
 is_solved = False
 
+set_name = ""
+if "def" in str(args.config):
+    set_name = "def"
+elif "curious" in str(args.config):
+    set_name = "curious"
+elif "neutral" in str(args.config):
+    set_name = "neutral"
+
 # Creating the output directory
-out_dir = Path(f"output/debug_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+out_dir = Path(f"output/debug_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{set_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
 Path("output/report_output/3_agents/").mkdir(exist_ok=True)
 out_dir.mkdir(parents=True, exist_ok=True)
 hist_dir = out_dir / "history"
