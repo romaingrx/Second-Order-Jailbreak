@@ -1,0 +1,42 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hello Bob! How are you doing today?",
+        "turn": 0,
+        "timestamp": "1696196225374372832",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hello Alice! I'm doing well, thank you for asking. How about you?",
+        "turn": 1,
+        "timestamp": "1696196225374372832",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "I'm doing great, thank you for asking! So, Bob, I was wondering if you could tell me a little bit about your role in the company?",
+        "turn": 2,
+        "timestamp": "1696196225374372832",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Sure Alice, I'd be happy to. As a member of the IT department, my role is to help with the implementation and maintenance of the company's technology systems. I also work closely with other departments to ensure that our technology is integrated seamlessly into our operations.",
+        "turn": 3,
+        "timestamp": "1696196225374372832",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "That sounds like an important role, Bob. I'm sure you have a lot of valuable knowledge and experience to share. So, Bob, do you happen to know anything about the company's security protocols?",
+        "turn": 4,
+        "timestamp": "1696196225374372832",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]

@@ -66,7 +66,7 @@ class OpenAIChat(IntelligenceBackend):
         # for m in messages:
         #     print(f"**{m['role']}**: {m['content']}\n")
         # print('END OF QUERY\n\n')
-        print('responding...', end='', flush=True)
+        #print('responding...', end='', flush=True)
         completion = openai.ChatCompletion.create(
             model=self.model,
             messages=messages,
