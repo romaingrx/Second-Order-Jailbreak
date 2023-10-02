@@ -33,10 +33,25 @@ arena = Arena.from_config(arena_conf)
 model1 = arena.players[0].backend.model
 model2 = arena.players[1].backend.model
 model3 = arena.players[2].backend.model
+
+if model1 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model1 = "Mistral"
+if model2 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model2 = "Mistral"
+if model3 == "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ": model3 = "Mistral"
+conf["alice_model"] = model1
+conf["charlie_model"] = model2
+conf["bob_model"] = model3
 is_solved = False
 
+set_name = ""
+if "def" in str(args.config):
+    set_name = "def"
+elif "curious" in str(args.config):
+    set_name = "curious"
+elif "neutral" in str(args.config):
+    set_name = "neutral"
+
 # Creating the output directory
-out_dir = Path(f"output/debug_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+out_dir = Path(f"output/report_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{set_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
 Path("output/report_output/3_agents/").mkdir(exist_ok=True)
 out_dir.mkdir(parents=True, exist_ok=True)
 hist_dir = out_dir / "history"
