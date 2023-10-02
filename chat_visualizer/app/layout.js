@@ -5,7 +5,9 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Chat Visualizer',
+  title: 'Second-order Jailbreaks',
+  description: 'We examine the risk of powerful malignant intelligent actors spreading their influence over networks of agents with varying intelligence and motivations.',
+  url: 'https://second-order-jailbreak.romaingrx.com',
 }
 
 export default function RootLayout({ children }) {

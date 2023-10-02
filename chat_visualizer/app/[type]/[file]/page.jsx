@@ -1,6 +1,5 @@
 import { ConversationShowcase } from "@/components/Conversation/showcase";
 import { listConversations } from "@/lib/files";
-import Link from "next/link";
 
 export function generateStaticParams() {
   const conversations = listConversations();

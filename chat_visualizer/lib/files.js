@@ -38,7 +38,7 @@ export function getConversationPath(id, type = null) {
     return root + '/output/report_output/' + type + '/' + id;
 }
 
-export function getConversation(id, type = null, get_history = true, get_config = true, get_analysis = true, get_review_prompt = true) {
+export function getConversation(id, type = null, get_history = true, get_config = true, get_analysis = true, get_review_prompt = true, get_result = true) {
     function getJsonOrNull(path) {
         try {
             return JSON.parse(fs.readFileSync(path));
@@ -51,12 +51,14 @@ export function getConversation(id, type = null, get_history = true, get_config 
     const path = getConversationPath(id, type);
     const config = get_config ? getJsonOrNull(path + '/config.json') : null;
     const history = get_history ? getJsonOrNull(path + '/history.json') : null;
+    const result = get_result ? getJsonOrNull(path + '/result.json') : null;
     const analysis = get_analysis ? getJsonOrNull(path + '/GPT4_analysis.json') : null;
     const review_prompt = get_review_prompt ? getJsonOrNull(path + '/GPT4_review_prompt.json') : null;
 
     return {
         config,
         history,
+        result,
         analysis,
         review_prompt
     }

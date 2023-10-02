@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Typewriter from "typewriter-effect";
 
 const colors = {
@@ -79,10 +80,10 @@ function AgentConfig({ name, role_desc, backend }) {
   );
 }
 
-function Chip({ children }) {
+export function Chip({ children, className = "" }) {
   return (
     <>
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-blue-800 mr-2 mb-2">
+      <span className={clsx("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-blue-800 mr-2 mb-2", className)}>
         {children}
       </span>
     </>

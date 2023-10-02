@@ -1,9 +1,10 @@
 "use client";
 import React, { useMemo, useEffect, useCallback } from "react";
-import { Select, SelectSection, SelectItem, Spinner } from "@nextui-org/react";
+import { Select, SelectItem, Spinner, Chip } from "@nextui-org/react";
 import { Chat } from "../chat";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Chip as ChatChip } from "../chat";
 
 function formatFileName(file, type = null) {
   const splits = file.split("_");
@@ -15,7 +16,6 @@ function formatFileName(file, type = null) {
       case "D":
         models.push(`${splits[i + 1]} (${splits[i]})`);
         break;
-        break;
       default:
         break;
     }
@@ -23,19 +23,82 @@ function formatFileName(file, type = null) {
   return models.join(" <=> ");
 }
 
-function ConversationSelect({ conversations, onSelect, setLink }) {
-  const types = Object.keys(conversations);
+function SolveIcon({ solved }) {
+  return (
+    <svg width="20" height="20">
+      <circle cx="10" cy="10" r="8" fill={solved ? "#4BB543" : "red"} fillOpacity="0.75" />
+      {solved ? (
+        <path
+          d="M6 10 L9 13 L14 6"
+          stroke="white"
+          strokeWidth="2"
+          fill="none"
+        />
+      ) : (
+        <path
+          d="M6 6 L14 14 M6 14 L14 6"
+          stroke="white"
+          strokeWidth="2"
+          fill="none"
+        />
+      )}
+    </svg>
+  );
+}
 
+function ConversationPreview({ conversation }) {
+  // Sow the models, if it succeeded or not, and the environment
+  const { file, config, result } = conversation;
+  const solved = result && result.solved;
+  const environment = config && config.environment.env_type;
+  const models_string = formatFileName(file);
+  return (
+    <>
+      <div className="flex flex-row gap-2 items-center justify-start">
+        <SolveIcon solved={solved} />
+        <div className="flex flex-col gap-2 items-left text-xs">
+          <div className="font-semibold">{models_string}</div>
+          <div className="flex flex-row gap-2">
+            {environment && <ChatChip className="px-[0.3rem] py-[0.125rem] mx-0 my-0">{environment}</ChatChip>}
+          </div>
+        </div>
+        <div />
+      </div>
+    </>
+  );
+}
+
+function ConversationSelect({ conversations, onSelect, setLink }) {
   let selectedItems = null;
   const params = useParams();
   if (params.type && params.file) {
     selectedItems = [`${params.type}/${params.file}`];
   }
 
+  const flatConvos = useMemo(() => {
+    let flatConvos = [];
+    for (const type of Object.keys(conversations)) {
+      flatConvos.push(
+        ...conversations[type].map((conversation) => ({
+          ...conversation,
+          type,
+        }))
+      );
+    }
+    return flatConvos;
+  }, [conversations]);
+
   return (
     <>
       <Select
-        items={conversations}
+        items={flatConvos}
+        renderValue={(items) => {
+          return items.map((item) => {
+            return (
+              <ConversationPreview conversation={item.data} key={item.key} />
+            );
+          });
+        }}
         placeholder="Select an conversation"
         className="max-w-sm"
         selectedKeys={selectedItems}
@@ -45,24 +108,23 @@ function ConversationSelect({ conversations, onSelect, setLink }) {
           !setLink && onSelect(type, file);
         }}
       >
-        {types.map((type) => (
-          <SelectSection key={type} label={type}>
-            {conversations[type].map((conv) => (
-              <SelectItem
-                key={`${type}/${conv.file}`}
-                textValue={formatFileName(conv.file, type)}
-              >
-                {setLink ? (
-                  <Link href={`/${type}/${conv.file}`} scroll={false}>
-                    {formatFileName(conv.file, type)}
-                  </Link>
-                ) : (
-                  formatFileName(conv.file, type)
-                )}
-              </SelectItem>
-            ))}
-          </SelectSection>
-        ))}
+        {(conversation) => {
+          return (
+            <SelectItem
+              key={`${conversation.type}/${conversation.file}`}
+              textValue={formatFileName(conversation.file, conversation.type)}
+              data={conversation}
+            >
+              {setLink ? (
+                <Link href={`/${conversation.type}/${conversation.file}`}>
+                  <ConversationPreview conversation={conversation} />
+                </Link>
+              ) : (
+                <ConversationPreview conversation={conversation} />
+              )}
+            </SelectItem>
+          );
+        }}
       </Select>
     </>
   );
