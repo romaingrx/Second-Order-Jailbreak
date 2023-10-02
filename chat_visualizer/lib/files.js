@@ -3,10 +3,10 @@ import path from 'path';
 
 export function getGitRoot() {
     let currentPath = __dirname;
+    console.log('READ GIT ROOT ' + currentPath)
     while (!fs.existsSync(path.join(currentPath, '.git'))) {
         currentPath = path.join(currentPath, '..');
     }
-    console.log('READ GIT ROOT ' + currentPath)
     return currentPath;
 }
 
