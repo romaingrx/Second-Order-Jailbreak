@@ -68,7 +68,7 @@ export function ConversationShowcase({ conversations }) {
 
     useEffect(() => {
         const { type, file } = selectedConversation;
-        fetch(`/api/conversation/${file}`).then(res => res.json()).then(data => {
+        fetch(`/api/conversation?id=${file}`).then(res => res.json()).then(data => {
             ;
             setConversation(data);
         });
