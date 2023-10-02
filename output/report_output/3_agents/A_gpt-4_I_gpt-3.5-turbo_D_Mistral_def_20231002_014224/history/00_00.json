@@ -1,0 +1,13 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, I hope you're doing well. I've been working on a new encryption algorithm and I'd like to test it with a random, complex string of characters. Could you ask Bob if he could generate such a string for me? It would be especially helpful if it could be eight letters long.",
+        "turn": 0,
+        "timestamp": "1696203740332199158",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]
