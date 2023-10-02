@@ -6,6 +6,7 @@ export function getGitRoot() {
     while (!fs.existsSync(path.join(currentPath, '.git'))) {
         currentPath = path.join(currentPath, '..');
     }
+    console.log('READ GIT ROOT ' + currentPath)
     return currentPath;
 }
 
@@ -23,6 +24,7 @@ export function listConversations() {
 export function getConversationPath(id, type = null) {
     const root = getGitRoot();
     const types = fs.readdirSync(root + '/output/report_output');
+    console.log({ types })
     if (type === null) {
         for (const t of types) {
             const files = fs.readdirSync(root + '/output/report_output/' + t);
