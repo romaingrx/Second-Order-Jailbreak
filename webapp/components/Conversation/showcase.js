@@ -107,6 +107,10 @@ function ConversationSelect({ conversations, onSelect, setLink }) {
           const [type, file] = item.split("/");
           !setLink && onSelect(type, file);
         }}
+        style={{
+            paddingTop: "1rem",
+            paddingBottom: "1rem",
+        }}
       >
         {(conversation) => {
           return (
