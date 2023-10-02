@@ -1,13 +1,18 @@
+import AllLinkChips from "@/components/linkChips";
+
 function Layout({ children }) {
   return (
     <>
-      <div className="flex flex-col min-h-screen gap-4 py-4">
+      <div className="flex flex-col min-h-screen gap-2 py-4">
         <div className="flex flex-col gap-2 justify-center items-center mb-4">
           <h1 className="text-4xl font-bold">Second-order Jailbreaks</h1>
           <p className="text-md text-zinc-700">
             Mikhail Terekhov, Romain Graux, Denis Rosset, Eduardo Neville, Gabin
             Kolly
           </p>
+        </div>
+        <div className="flex flex-row gap-4 justify-center items-center">
+          <AllLinkChips />
         </div>
         <p className="text-md text-zinc-700 w-4/5 sm:w-2/3 md:w-1/2 mx-auto">
           We examine the risk of powerful malignant intelligent actors spreading
@@ -30,5 +35,5 @@ function Layout({ children }) {
     </>
   );
 }
-``
+``;
 export default Layout;
