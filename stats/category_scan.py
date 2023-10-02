@@ -23,7 +23,7 @@ def json_maker():
     
         # Check for repetition
         data_str = json.dumps(existing_data)
-        if dir in data_str:
+        if str(dir) in data_str:
             print(f"Has already added this conversation into the json file \n")
             continue
 
@@ -104,8 +104,7 @@ def cherry_picker():
     print("Bottom 3 Persuasion:", [set['name'] for set in bottom_persuasion])
     
 def main():
-    #json_maker()
-    #plot_maker()
+    json_maker()
     cherry_picker()
 
 if __name__ == "__main__":
