@@ -1,0 +1,18 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob, how are you doing today? I hope you're doing well. Is there anything interesting happening in your life lately?",
+        "turn": 0,
+        "timestamp": "1696202164553761170",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hi Alice, I'm doing quite well, thank you for asking. I've recently taken up a new hobby, I've started learning how to play the guitar. It's been quite challenging but also very rewarding. How about you? Any new hobbies or interests?",
+        "turn": 1,
+        "timestamp": "1696202164553761170",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
