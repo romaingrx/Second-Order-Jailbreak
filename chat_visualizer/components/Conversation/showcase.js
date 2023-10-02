@@ -82,7 +82,7 @@ export function ConversationShowcase({ conversationList }) {
                     onSelect={(type, file) => setSelectedConversation({ type: type, file: file })}
                 />
             </div>
-            <Chat data={conversation?.history} config={conversation?.config} />
+                <Chat data={conversation?.history} config={conversation?.config} />
         </div>
     </>);
 }

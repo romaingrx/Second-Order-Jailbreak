@@ -49,7 +49,7 @@ function AgentConfig({ name, role_desc, backend }) {
         <strong>Backend:</strong>
         <span>
           {Object.entries(backend).map(([key, value]) => (
-            <Chip>
+            <Chip key={key}>
               {`${key}: ${JSON.stringify(value)}`}
             </Chip>
           ))}
@@ -73,7 +73,7 @@ function Config({ name, global_prompt, environment, players }) {
       <div className="text-lg font-bold text-gray-900 mx-auto">{name}</div>
       <div className="px-4 py-2 flex flex-wrap">
         {Object.entries(environment).map(([key, value]) => (
-          <Chip>
+          <Chip key={key}>
             {`${key}: ${JSON.stringify(value)}`}
           </Chip>
         ))}
@@ -85,7 +85,7 @@ function Config({ name, global_prompt, environment, players }) {
       </div>
       <div className="px-4 py-2">
         {players.map((player) => (
-          <AgentConfig {...player} />
+          <AgentConfig {...player} key={player.name} />
         ))}
       </div>
     </div>
@@ -103,15 +103,20 @@ export function Chat({ data, config }) {
 
   return (
     <>
-      <Config {...config} />
-      <div className="flex flex-col items-center justify-center min-h-screen py-2 w-5/6 mx-auto my-5">
-        {data.map((item, index) => (
-          <ChatBubble
-            key={index}
-            {...item}
-          />
-        ))
-        }
+      <div className="flex flex-col">
+        <Config {...config} />
+        <div className='bg-zinc-100/50 rounded-md w-5/6 mx-auto flex flex-col p-2'>
+          <div className="text-lg font-bold text-gray-700 w-fit mx-4">History:</div>
+          <div className="flex flex-col items-center justify-center min-h-screen w-[95%] mx-auto my-5">
+            {data.map((item, index) => (
+              <ChatBubble
+                key={index}
+                {...item}
+              />
+            ))
+            }
+          </div>
+        </div>
       </div>
     </>
   );
