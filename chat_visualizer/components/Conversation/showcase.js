@@ -107,7 +107,7 @@ export function ConversationShowcase({
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-full sm:w-5/6 mx-auto h-full flex-grow">
+      <div className="flex flex-col gap-4 w-full sm:w-5/6 mx-auto">
         <div className="flex flex-row justify-end">
           <ConversationSelect
             conversations={conversations}
@@ -116,14 +116,12 @@ export function ConversationShowcase({
           />
         </div>
         {isLoading ? (
-          <div className="flex flex-col flex-grow justify-center items-center mx-auto my-auto w-full h-full">
-          <div className="flex flex-col justify-center items-center mx-auto my-auto flex-grow">
-            <Spinner color="secondary"/>
+          <div className="flex flex-col justify-center items-center mx-auto">
+            <Spinner color="secondary" />
             <p className="text-gray-500">Loading conversation...</p>
           </div>
-          </div>
         ) : (
-          <Chat data={conversation?.history} config={conversation?.config} />
+          <Chat conversation={conversation} />
         )}
       </div>
     </>

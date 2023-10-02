@@ -18,7 +18,7 @@ export default function ChatPage({ params }) {
   const conversations = listConversations();
   return (
     <>
-      <div className="flex flex-col min-h-screen gap-4 py-4">
+      <div className="flex flex-col gap-4 py-4">
         <hr className="w-2/3 mx-auto"/>
         <div className="text-center text-gray-500 text-sm">
           Below, you can select a conversation to visualize the configuration of
