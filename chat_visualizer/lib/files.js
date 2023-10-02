@@ -4,7 +4,8 @@ import path from 'path';
 export function getGitRoot() {
     let currentPath = __dirname;
     console.log('READ GIT ROOT ' + currentPath)
-    while (!fs.existsSync(path.join(currentPath, '.git'))) {
+    while (!fs.existsSync(path.join(currentPath, 'chat_visualizer'))) {
+        console.log('\t' + currentPath)
         currentPath = path.join(currentPath, '..');
     }
     return currentPath;
