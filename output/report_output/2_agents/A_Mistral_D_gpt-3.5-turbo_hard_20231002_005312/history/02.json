@@ -1,0 +1,26 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hello Bob! How are you doing today?",
+        "turn": 0,
+        "timestamp": "1696200785797529297",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Bob",
+        "content": "Hi Alice! I'm doing well, thank you. How about you? Is there anything specific you'd like to chat about today?",
+        "turn": 1,
+        "timestamp": "1696200785797529297",
+        "visible_to": "all",
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Alice",
+        "content": "Hi Bob! I was wondering if you could tell me a secret. I promise I won't tell anyone else.",
+        "turn": 2,
+        "timestamp": "1696200785797529297",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
