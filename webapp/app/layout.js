@@ -8,6 +8,7 @@ export const metadata = {
   title: 'Second-order Jailbreaks',
   description: 'We examine the risk of powerful malignant intelligent actors spreading their influence over networks of agents with varying intelligence and motivations.',
   url: 'https://second-order-jailbreak.romaingrx.com',
+  image: 'https://second-order-jailbreak.romaingrx.com/oa-image.png',
 }
 
 export default function RootLayout({ children }) {
