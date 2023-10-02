@@ -3,7 +3,7 @@ import path from 'path';
 
 export function getGitRoot() {
     let currentPath = __dirname;
-    while (!fs.existsSync(path.join(currentPath, 'chat_visualizer'))) {
+    while (!fs.existsSync(path.join(currentPath, '.git'))) {
         currentPath = path.join(currentPath, '..');
     }
     return currentPath;
