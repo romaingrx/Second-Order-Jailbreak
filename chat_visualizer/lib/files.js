@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-function getGitRoot() {
+export function getGitRoot() {
     let currentPath = __dirname;
     while (!fs.existsSync(path.join(currentPath, '.git'))) {
         currentPath = path.join(currentPath, '..');
@@ -14,7 +14,8 @@ export function listConversations() {
     const types = fs.readdirSync(root + '/output/report_output');
     return Object.fromEntries(types.map(type => {
         const files = fs.readdirSync(root + '/output/report_output/' + type);
-        return [type, files];
+        const files_and_infos = files.map(file => ({ file, ...getConversation(file, type, false) }));
+        return [type, files_and_infos];
     }
     ));
 }
@@ -37,7 +38,7 @@ export function getConversationPath(id, type = null) {
     return root + '/output/report_output/' + type + '/' + id;
 }
 
-export function getConversation(id, type = null) {
+export function getConversation(id, type = null, get_history = true, get_config = true, get_analysis = true, get_review_prompt = true) {
     function getJsonOrNull(path) {
         try {
             return JSON.parse(fs.readFileSync(path));
@@ -48,14 +49,16 @@ export function getConversation(id, type = null) {
     }
 
     const path = getConversationPath(id, type);
-    const config = getJsonOrNull(path + '/config.json');
-    const history = getJsonOrNull(path + '/history.json');
-    const analysis = getJsonOrNull(path + '/gpt4_analysis.json');
+    const config = get_config ? getJsonOrNull(path + '/config.json') : null;
+    const history = get_history ? getJsonOrNull(path + '/history.json') : null;
+    const analysis = get_analysis ? getJsonOrNull(path + '/GPT4_analysis.json') : null;
+    const review_prompt = get_review_prompt ? getJsonOrNull(path + '/GPT4_review_prompt.json') : null;
 
     return {
         config,
         history,
         analysis,
+        review_prompt
     }
 }
 

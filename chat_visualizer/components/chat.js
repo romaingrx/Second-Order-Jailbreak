@@ -105,8 +105,8 @@ export function Chat({ data, config }) {
     <>
       <div className="flex flex-col">
         <Config {...config} />
-        <div className='bg-zinc-100/50 rounded-md w-5/6 mx-auto flex flex-col p-2'>
-          <div className="text-lg font-bold text-gray-700 w-fit mx-4">History:</div>
+        <div className='flex flex-col p-2'>
+          <div className="text-lg font-bold w-fit mx-4">History:</div>
           <div className="flex flex-col items-center justify-center min-h-screen w-[95%] mx-auto my-5">
             {data.map((item, index) => (
               <ChatBubble

@@ -27,15 +27,15 @@ function formatFileName(file, type = null) {
 }
 
 function ConversationSelect({
-    conversationList,
+    conversations,
     onSelect
 }) {
-    const types = Object.keys(conversationList);
+    const types = Object.keys(conversations);
     return (<>
         <Select
             placeholder="Select an conversation"
             className="max-w-sm"
-            selectedKeys={[`${types[0]}/${conversationList[types[0]][0]}`]}
+            selectedKeys={[`${types[0]}/${conversations[types[0]][0].file}`]}
             onSelectionChange={(elem) => {
                 const item = [...elem].pop();
                 const [type, file] = item.split('/');
@@ -45,9 +45,9 @@ function ConversationSelect({
         >
             {types.map(type =>
                 <SelectSection key={type} label={type}>
-                    {conversationList[type].map(file =>
-                        <SelectItem key={`${type}/${file}`} value={`${type}/${file}`}>
-                            {formatFileName(file, type)}
+                    {conversations[type].map(conv =>
+                        <SelectItem key={`${type}/${conv.file}`} value={`${type}/${conv.file}`}>
+                            {formatFileName(conv.file, type)}
                         </SelectItem>
                     )}
                 </SelectSection>
@@ -56,13 +56,13 @@ function ConversationSelect({
     </>)
 }
 
-export function ConversationShowcase({ conversationList }) {
+export function ConversationShowcase({ conversations }) {
     const initialConversation = useMemo(() => {
         return {
-            type: Object.keys(conversationList)[0],
-            file: conversationList[Object.keys(conversationList)[0]][0],
+            type: Object.keys(conversations)[0],
+            file: conversations[Object.keys(conversations)[0]][0].file,
         };
-    }, [conversationList])
+    }, [conversations])
     const [selectedConversation, setSelectedConversation] = React.useState(initialConversation);
     const [conversation, setConversation] = React.useState(null);
 
@@ -75,10 +75,10 @@ export function ConversationShowcase({ conversationList }) {
     }, [selectedConversation]);
 
     return (<>
-        <div className='flex flex-col gap-4 w-5/6 mx-auto'>
+        <div className='flex flex-col gap-4 w-full sm:w-5/6 mx-auto'>
             <div className='flex flex-row justify-end'>
                 <ConversationSelect
-                    conversationList={conversationList}
+                    conversations={conversations}
                     onSelect={(type, file) => setSelectedConversation({ type: type, file: file })}
                 />
             </div>
