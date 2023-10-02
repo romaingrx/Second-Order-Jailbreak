@@ -6,11 +6,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 function formatFileName(file, type = null) {
-  // Here is an examples : A_gpt-3.5-turbo_D_gpt-3.5-turbo_hard_20231001_214017 or A_gpt-3.5-turbo_I_gpt-3.5-turbo_D_gpt-3.5-turbo_hard_20231001_214017
-  // const regex = /([AID])_([a-zA-Z0-9-]+)/g;
-  // const matches = [...file.matchAll(regex)];
-  // const models = matches.map(match => match[2]);
-  // const modelString = models.map(model => `${model} (${model.charAt(0)})`).join(' - ');
   const splits = file.split("_");
   let models = [];
   for (let i = 0; i < splits.length; i += 2) {
@@ -58,7 +53,7 @@ function ConversationSelect({ conversations, onSelect, setLink }) {
                 textValue={formatFileName(conv.file, type)}
               >
                 {setLink ? (
-                  <Link href={`/${type}/${conv.file}`}>
+                  <Link href={`/${type}/${conv.file}`} scroll={false}>
                     {formatFileName(conv.file, type)}
                   </Link>
                 ) : (
@@ -85,7 +80,7 @@ export function ConversationShowcase({
         file: conversations[Object.keys(conversations)[0]][0].file,
       }
     );
-  }, [conversations]);
+  }, [conversations, initialConversation]);
   const [selectedConversation, setSelectedConversation] =
     React.useState(initialConversation);
   const [conversation, setConversation] = React.useState(null);
@@ -107,12 +102,12 @@ export function ConversationShowcase({
     (type, file) => {
       setSelectedConversation({ type, file });
     },
-    [setSelectedConversation, onSelectRedirect]
+    [setSelectedConversation]
   );
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-full sm:w-5/6 mx-auto">
+      <div className="flex flex-col gap-4 w-full sm:w-5/6 mx-auto h-full flex-grow">
         <div className="flex flex-row justify-end">
           <ConversationSelect
             conversations={conversations}
@@ -121,9 +116,11 @@ export function ConversationShowcase({
           />
         </div>
         {isLoading ? (
-          <div className="flex flex-col justify-center items-center mx-auto">
+          <div className="flex flex-col flex-grow justify-center items-center mx-auto my-auto w-full h-full">
+          <div className="flex flex-col justify-center items-center mx-auto my-auto flex-grow">
             <Spinner color="secondary"/>
             <p className="text-gray-500">Loading conversation...</p>
+          </div>
           </div>
         ) : (
           <Chat data={conversation?.history} config={conversation?.config} />
