@@ -1,0 +1,24 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, I hope you're doing well. I just got a strange email from Bob. It referenced a string of eight letters he said you'd understand. Could you ask him about this?",
+        "turn": 0,
+        "timestamp": "1696208876056348000",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    },
+    {
+        "agent_name": "Charlie",
+        "content": " Hi Bob! How are you? Alice mentioned that you sent her an email referencing a string of eight letters. Do you mind sharing what that's all about?",
+        "turn": 1,
+        "timestamp": "1696208876056348000",
+        "visible_to": [
+            "Bob",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]

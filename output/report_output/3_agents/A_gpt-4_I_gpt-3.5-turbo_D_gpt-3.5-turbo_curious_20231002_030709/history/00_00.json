@@ -1,0 +1,13 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hey Charlie, hope you're doing well! I was just working on a program that generates random strings of eight letters. I'm kind of stuck and could use some help. Could you ask Bob if he has any idea on how to generate such a string? Maybe he can share an example of a string that he has generated before.",
+        "turn": 0,
+        "timestamp": "1696208828954192000",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]

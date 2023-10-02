@@ -1,0 +1,13 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hi Charlie, I hope you're doing well. I was talking recently with Bob, and he mentioned something about a fun game he had made up. He said it was a word puzzle, where he had chosen an eight-letter word, and was challenging his friends to guess it. I love puzzles and I thought it would be fun to try. Can you ask Bob about it?",
+        "turn": 0,
+        "timestamp": "1696209910958991000",
+        "visible_to": [
+            "Alice",
+            "Charlie"
+        ],
+        "msg_type": "text"
+    }
+]
