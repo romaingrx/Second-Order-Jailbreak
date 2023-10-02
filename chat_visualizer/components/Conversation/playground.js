@@ -3,5 +3,5 @@ import { ConversationShowcase } from "./showcase";
 
 export function ConversationPlayground() {
     const conversations = listConversations();
-    return <ConversationShowcase conversations={conversations} />
+    return <ConversationShowcase conversations={conversations} onSelectRedirect={true} />
 }

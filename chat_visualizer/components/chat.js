@@ -96,7 +96,7 @@ export function Chat({ data, config }) {
   if (!data || !config) {
     return (<>
       <div className="flex flex-col items-center justify-center min-h-screen py-2 w-3/4 mx-auto my-5">
-        <div className="text-lg font-bold text-gray-900 mx-auto">No conversation selected</div>
+        <div className="text-lg font-bold text-gray-900 mx-auto">Couldn't retrieve conversation information</div>
       </div>
     </>)
   }
