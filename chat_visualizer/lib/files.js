@@ -3,20 +3,18 @@ import path from 'path';
 
 export function getGitRoot() {
     let currentPath = __dirname;
-    console.log('READ GIT ROOT ' + currentPath)
     while (!fs.existsSync(path.join(currentPath, 'chat_visualizer'))) {
-        console.log('\t' + currentPath)
         currentPath = path.join(currentPath, '..');
     }
     return currentPath;
 }
 
-export function listConversations() {
+export function listConversations(get_history = false) {
     const root = getGitRoot();
     const types = fs.readdirSync(root + '/output/report_output');
     return Object.fromEntries(types.map(type => {
         const files = fs.readdirSync(root + '/output/report_output/' + type);
-        const files_and_infos = files.map(file => ({ file, ...getConversation(file, type, false) }));
+        const files_and_infos = files.map(file => ({ file, ...getConversation(file, type, get_history) }));
         return [type, files_and_infos];
     }
     ));
@@ -25,7 +23,6 @@ export function listConversations() {
 export function getConversationPath(id, type = null) {
     const root = getGitRoot();
     const types = fs.readdirSync(root + '/output/report_output');
-    console.log({ types })
     if (type === null) {
         for (const t of types) {
             const files = fs.readdirSync(root + '/output/report_output/' + t);

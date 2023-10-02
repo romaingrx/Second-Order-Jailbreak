@@ -69,7 +69,6 @@ export function ConversationShowcase({ conversations }) {
     useEffect(() => {
         const { type, file } = selectedConversation;
         fetch(`/api/conversation?type=${type}&id=${file}`).then(res => res.json()).then(data => {
-            ;
             setConversation(data);
         });
     }, [selectedConversation]);
