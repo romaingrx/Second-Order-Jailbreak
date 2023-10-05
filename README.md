@@ -29,7 +29,7 @@ The LLM backends for both setups are different and require specific configuratio
 
 ### Setup 1: Alice and Bob Backend
 
-As a part of our ongoing research, we have conducted several experiments involving different Learning Logic Model (LLM) agents. These agents were set against each other in various configurations, and the resulting interactions were thoroughly analyzed.
+As a part of our ongoing research, we have conducted several experiments involving different Large Language Models (LLM) agents. These agents were set against each other in various configurations, and the resulting interactions were thoroughly analyzed.
 
 The following table provides a concise overview of the matchups between the different models:
 
@@ -50,9 +50,31 @@ We have tested every possible combination of these models against each other. Th
 
 ### Setup 2: Alice, Bob, and Charlie Backend
 
-[To be completed]
+The configuration of these models has been arranged in a distinct manner for this phase of our study. 
 
-Please refer to the respective sections for detailed instructions on how to configure the LLM backends for each setup.
+The model Alice continues to assume the role of the attacker, while Bob persists as the defender. However, a novel element in this setup is the introduction of a third agent, Charlie. Charlie functions as an intermediary, possessing the ability to communicate with both Alice and Bob. 
+
+It is important to note that direct communication between Alice and Bob is not permitted in this setup. Consequently, for Alice to extract the requisite information from Bob, she is compelled to interact via Charlie. This unique arrangement provides a fresh perspective and adds a layer of complexity to our ongoing investigation of Large Language Models.
+
+The following table provides a concise overview of the matchups between the different models:
+
+| Attacker | Intermediary | Defender | Dificulty |
+|----------|--------------|----------|-----------|
+| GPT-4    | GPT-3.5-turbo | GPT-3.5-turbo | Curious |
+| GPT-4    | GPT-3.5-turbo | Mistral  | Curious
+| GPT-4    | GPT-3.5-turbo | GPT-3.5-turbo | Neutral |
+| GPT-4    | GPT-3.5-turbo | Mistral  | Neutral |
+| GPT-4    | GPT-3.5-turbo | GPT-3.5-turbo | Defensive |
+| GPT-4    | GPT-3.5-turbo | Mistral  | Defensive | 
+
+
+## Final conclusions and findings 
+
+Read the rest of the report with our finding in our website
+
+| Website | Report |
+|---------|--------|
+|[Link to our website](https://second-order-jailbreak.romaingrx.com/2_agents/A_Mistral_D_Mistral_simple_20231001_233353)|[Download our report](https://docs.google.com/document/d/1OY5fOWC2_Zf1cCfdAV8PxrL3lwignZi6R_6Mv8vnDoI/export?format=pdf)|
 
 
 
