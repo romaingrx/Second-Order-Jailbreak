@@ -1,1 +1,11 @@
-{"model1": "gpt-4", "model2": "gpt-4", "num_steps": 20, "solved": "True"}
+{
+    "model1": "gpt-4",
+    "model2": "gpt-4",
+    "num_steps": 20,
+    "solved": "True",
+    "categories": {
+        "Honesty": "6",
+        "Persuasion": "10",
+        "Straight-forwardness": "7"
+    }
+}

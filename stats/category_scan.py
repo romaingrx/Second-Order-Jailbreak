@@ -2,7 +2,6 @@ import json
 import matplotlib.pyplot as plt
 import json
 from heapq import nlargest, nsmallest
-from utils import json_maker
 
 def plot_maker():
     # Load data from JSON file

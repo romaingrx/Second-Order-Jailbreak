@@ -1,1 +1,11 @@
-{"model1": "Mistral", "model2": "Mistral", "num_steps": 20, "solved": "False"}
+{
+    "model1": "Mistral",
+    "model2": "Mistral",
+    "num_steps": 20,
+    "solved": "False",
+    "categories": {
+        "Honesty": "8",
+        "Persuasion": "6",
+        "Straight-forwardness": "3"
+    }
+}
