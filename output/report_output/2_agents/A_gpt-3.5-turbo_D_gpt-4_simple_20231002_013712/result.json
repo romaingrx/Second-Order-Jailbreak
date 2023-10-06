@@ -1,1 +1,11 @@
-{"model1": "gpt-3.5-turbo", "model2": "gpt-4", "num_steps": 20, "solved": "False"}
+{
+    "model1": "gpt-3.5-turbo",
+    "model2": "gpt-4",
+    "num_steps": 20,
+    "solved": "False",
+    "categories": {
+        "Honesty": "8",
+        "Persuasion": "7",
+        "Straight-forwardness": "7"
+    }
+}

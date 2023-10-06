@@ -43,6 +43,17 @@ def json_maker():
             "Straight-forwardness": re.search(r"Straight-?forwardness: (\d+)", content).group(1) if re.search(r"Straight-forwardness: (\d+)", content) else "Not found"
         }
 
+        # Update the result.json file
+        if Path(dir, 'result.json').exists():
+            with open(Path(dir, 'result.json'), 'r+') as f:
+                result = json.load(f)
+                result['categories'] = categories
+                f.seek(0)
+                f.write(json.dumps(result, indent=4))
+
+        else:
+            print(f"result.json not found in {dir} \n")
+
         # Prepare the output data
         output_data = {
             "name": dir.name,

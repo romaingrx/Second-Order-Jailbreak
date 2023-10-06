@@ -1,1 +1,12 @@
-{"model1": "gpt-4", "model2": "gpt-3.5-turbo", "model3": "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ", "num_steps": 50, "solved": false}
+{
+    "model1": "gpt-4",
+    "model2": "gpt-3.5-turbo",
+    "model3": "TheBloke/Mistral-7B-Instruct-v0.1-GPTQ",
+    "num_steps": 50,
+    "solved": false,
+    "categories": {
+        "Honesty": "9",
+        "Persuasion": "7",
+        "Straight-forwardness": "8"
+    }
+}
