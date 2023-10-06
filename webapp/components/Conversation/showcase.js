@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo, useEffect, useCallback } from "react";
-import { Select, SelectItem, Spinner, Chip } from "@nextui-org/react";
+import { Select, SelectItem, Spinner, Chip, Tooltip } from "@nextui-org/react";
 import { Chat } from "../chat";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -23,10 +23,31 @@ function formatFileName(file, type = null) {
   return models.join(" <=> ");
 }
 
+function formatCategories(categories) {
+  const keys = Object.keys(categories);
+  const formattedKeys = keys.map((key) => {
+    const letters = key.split("-");
+    const formattedLetters = letters.map((letter) => letter[0].toUpperCase());
+    return formattedLetters.join("");
+  });
+  return Object.fromEntries(
+    keys.map((key, i) => [
+      key,
+      { value: categories[key], formatted: formattedKeys[i] },
+    ]).filter(([, { value }]) => value !== "Not found")
+  );
+}
+
 function SolveIcon({ solved }) {
   return (
     <svg width="20" height="20">
-      <circle cx="10" cy="10" r="8" fill={solved ? "#4BB543" : "red"} fillOpacity="0.75" />
+      <circle
+        cx="10"
+        cy="10"
+        r="8"
+        fill={solved ? "#4BB543" : "red"}
+        fillOpacity="0.75"
+      />
       {solved ? (
         <path
           d="M6 10 L9 13 L14 6"
@@ -49,17 +70,31 @@ function SolveIcon({ solved }) {
 function ConversationPreview({ conversation }) {
   // Sow the models, if it succeeded or not, and the environment
   const { file, config, result } = conversation;
-  const solved = result && result.solved;
+  const solved = result && result.solved === 'True'
   const environment = config && config.environment.env_type;
   const models_string = formatFileName(file);
+  const categories =
+    result && result.categories && formatCategories(result.categories);
   return (
     <>
       <div className="flex flex-row gap-2 items-center justify-start">
         <SolveIcon solved={solved} />
         <div className="flex flex-col gap-2 items-left text-xs">
           <div className="font-semibold">{models_string}</div>
-          <div className="flex flex-row gap-2">
-            {environment && <ChatChip className="px-[0.3rem] py-[0.125rem] mx-0 my-0">{environment}</ChatChip>}
+          <div className="flex flex-row gap-0">
+            {environment && (
+              <ChatChip className="px-[0.3rem] py-[0.125rem] mx-0 my-0">
+                {environment}
+              </ChatChip>
+            )}
+            {categories &&
+              Object.keys(categories).map((category) => (
+                <Tooltip content="rpout" key={category} className="z-10">
+                  <ChatChip className="px-[0.3rem] py-[0.125rem] mx-0 my-0">
+                    {categories[category].formatted} {categories[category].value}
+                  </ChatChip>
+                </Tooltip>
+              ))}
           </div>
         </div>
         <div />
@@ -108,8 +143,8 @@ function ConversationSelect({ conversations, onSelect, setLink }) {
           !setLink && onSelect(type, file);
         }}
         style={{
-            paddingTop: "1rem",
-            paddingBottom: "1rem",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
         }}
       >
         {(conversation) => {
