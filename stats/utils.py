@@ -2,8 +2,7 @@ import glob
 from pathlib import PurePath, Path
 import json
 
-def dir_path():
-    output_root = 'output/report_output'
+def dir_path(output_root = 'output/report_output'):
     directories = []
     # The pattern '**' matches any files or directories (including those starting with '.')
     # The pattern '*/' matches any directory
@@ -61,3 +60,17 @@ def json_maker():
     with open('stats/category_stats.json', 'w') as f:
         json.dump(existing_data, f, indent=4)
 
+
+def extract_from_files(dir_path):
+    files_to_extract = ('config.json', 'result.json')
+    result = {
+        'exp_path': dir_path
+    }
+    for file in files_to_extract:
+        try:
+            with open(dir_path / file) as f:
+                data = json.load(f)
+        except:
+            data = None
+        result[file.split('.')[0]] = data
+    return result
