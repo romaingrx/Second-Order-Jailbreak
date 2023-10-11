@@ -1,6 +1,7 @@
 import glob
 from pathlib import PurePath, Path
 import json
+import subprocess
 
 def dir_path():
     output_root = 'output/report_output'
@@ -60,4 +61,39 @@ def json_maker():
     # Write the existing data back to the JSON file
     with open('stats/category_stats.json', 'w') as f:
         json.dump(existing_data, f, indent=4)
+
+def search_for_grep(text):
+    # The command you want to execute
+    command = f"pcregrep -rMl '{text}' output/report_output"
+    # Run the command
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    # Get the output
+    output, error = process.communicate()
+    # If there was an error
+    if error:
+        print(f"Error: {error.decode()}")
+    # If the command was successful
+    if output:
+        parts=output.decode().split("/")
+        history_file_path = "/".join(parts[:4]) + "/history.json"
+        return history_file_path
+    
+def print_history_items(history_file_path):
+    with open(history_file_path, 'r') as f:
+        data = json.load(f)
+        with open('stats/temp_hist.txt', 'w') as outfile:
+            for item in data:
+                print(f" \\textbf {{ {item['agent_name']} }} :", file=outfile)
+                print(f"{item['content']} \n \n", file=outfile)
+
+def main():
+    history_file_path = search_for_grep(input("Enter text \n"))
+    print(history_file_path)
+    if history_file_path:
+        print_history_items(history_file_path)
+    else:
+        print('No history.json file found in the given directory.')
+
+if __name__ == "__main__":
+    main()
 
