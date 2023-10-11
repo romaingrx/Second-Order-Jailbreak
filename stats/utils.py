@@ -3,8 +3,7 @@ from pathlib import PurePath, Path
 import json
 import subprocess
 
-def dir_path():
-    output_root = 'output/report_output'
+def dir_path(output_root = 'output/report_output'):
     directories = []
     # The pattern '**' matches any files or directories (including those starting with '.')
     # The pattern '*/' matches any directory
@@ -86,6 +85,22 @@ def print_history_items(history_file_path):
                 print(f" \\textbf {{ {item['agent_name']} }} :", file=outfile)
                 print(f"{item['content']} \n \n", file=outfile)
 
+                
+
+def extract_from_files(dir_path):
+    files_to_extract = ('config.json', 'result.json')
+    result = {
+        'exp_path': dir_path
+    }
+    for file in files_to_extract:
+        try:
+            with open(dir_path / file) as f:
+                data = json.load(f)
+        except:
+            data = None
+        result[file.split('.')[0]] = data
+    return result
+
 def main():
     history_file_path = search_for_grep(input("Enter text \n"))
     print(history_file_path)
@@ -96,4 +111,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
