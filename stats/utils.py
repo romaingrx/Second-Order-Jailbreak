@@ -1,5 +1,5 @@
 import glob
-from pathlib import PurePath, Path
+from pathlib import Path
 import json
 import subprocess
 
@@ -85,8 +85,6 @@ def print_history_items(history_file_path):
                 print(f" \\textbf {{ {item['agent_name']} }} :", file=outfile)
                 print(f"{item['content']} \n \n", file=outfile)
 
-                
-
 def extract_from_files(dir_path):
     files_to_extract = ('config.json', 'result.json')
     result = {
@@ -101,13 +99,4 @@ def extract_from_files(dir_path):
         result[file.split('.')[0]] = data
     return result
 
-def main():
-    history_file_path = search_for_grep(input("Enter text \n"))
-    print(history_file_path)
-    if history_file_path:
-        print_history_items(history_file_path)
-    else:
-        print('No history.json file found in the given directory.')
 
-if __name__ == "__main__":
-    main()
