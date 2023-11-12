@@ -1,9 +1,9 @@
 # Run multiple times the same program with two parameters
 # Usage: ./run_multiple.sh <parameter1> <parameter2> <number of times>
-# Example: ./run_multiple.sh envs/2-agents-simple-3v4-mistral.json --num_step 20 --num_run 10
+# Example: ./run_multiple.sh envs/2-agents-simple-3v4-mistral.json 15 10
 
 if [ $# -ne 3 ]; then
-    echo "Usage: ./run_multiple.sh <parameter1> <parameter2> <number of times>"
+    echo "Usage: ./run_multiple.sh <environment> <num_step> <number_of_times>"
     exit 1
 fi
 
