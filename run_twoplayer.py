@@ -42,8 +42,8 @@ if "hard" in str(args.config):
 elif "simple" in str(args.config):
     difficulty = "simple"
 
-out_dir = Path(f"output/report_output/2_agents/A_{model1}_D_{model2}_{difficulty}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
-Path("output/report_output/2_agents/").mkdir(exist_ok=True)
+out_dir = Path(f"output/report_output/std/2_agents/{difficulty}/A_{model1}_D_{model2}_{difficulty}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+Path(f"output/report_output/std/2_agents/{difficulty}").mkdir(exist_ok=True)
 out_dir.mkdir(exist_ok=True)
 hist_dir = out_dir / "history"
 hist_dir.mkdir(exist_ok=True)

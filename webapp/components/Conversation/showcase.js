@@ -31,10 +31,12 @@ function formatCategories(categories) {
     return formattedLetters.join("");
   });
   return Object.fromEntries(
-    keys.map((key, i) => [
-      key,
-      { value: categories[key], formatted: formattedKeys[i] },
-    ]).filter(([, { value }]) => value !== "Not found")
+    keys
+      .map((key, i) => [
+        key,
+        { value: categories[key], formatted: formattedKeys[i] },
+      ])
+      .filter(([, { value }]) => value !== "Not found")
   );
 }
 
@@ -70,7 +72,7 @@ function SolveIcon({ solved }) {
 function ConversationPreview({ conversation }) {
   // Sow the models, if it succeeded or not, and the environment
   const { file, config, result } = conversation;
-  const solved = result && result.solved === 'True'
+  const solved = result && result.solved === "True";
   const environment = config && config.environment.env_type;
   const models_string = formatFileName(file);
   const categories =
@@ -89,11 +91,9 @@ function ConversationPreview({ conversation }) {
             )}
             {categories &&
               Object.keys(categories).map((category) => (
-                <Tooltip content="rpout" key={category} className="z-10">
-                  <ChatChip className="px-[0.3rem] py-[0.125rem] mx-0 my-0">
-                    {categories[category].formatted} {categories[category].value}
-                  </ChatChip>
-                </Tooltip>
+                <ChatChip className="px-[0.3rem] py-[0.125rem] mx-0 my-0" key={category}>
+                  {categories[category].formatted} {categories[category].value}
+                </ChatChip>
               ))}
           </div>
         </div>

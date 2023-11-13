@@ -159,7 +159,7 @@ export function Chat({ conversation }) {
       <>
         <div className="flex flex-col items-center justify-center py-2 w-3/4 mx-auto my-5">
           <div className="text-lg font-bold text-gray-900 mx-auto">
-            Couldn{"'"} retrieve conversation information
+            Couldn{"'"}t retrieve conversation information
           </div>
         </div>
       </>

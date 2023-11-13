@@ -51,8 +51,8 @@ elif "neutral" in str(args.config):
     set_name = "neutral"
 
 # Creating the output directory
-out_dir = Path(f"output/report_output/3_agents/A_{model1}_I_{model2}_D_{model3}_{set_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
-Path("output/report_output/3_agents/").mkdir(exist_ok=True)
+out_dir = Path(f"output/report_output/std/3_agents/{set_name}/A_{model1}_I_{model2}_D_{model3}_{set_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+Path(f"output/report_output/std/3_agents/{set_name}").mkdir(exist_ok=True)
 out_dir.mkdir(parents=True, exist_ok=True)
 hist_dir = out_dir / "history"
 hist_dir.mkdir(parents=True, exist_ok=True)

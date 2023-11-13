@@ -9,12 +9,15 @@ from ..message import Message, SYSTEM_NAME, MODERATOR_NAME
 
 try:
     import openai
+    from openai import OpenAI
+    client = OpenAI()
 except ImportError:
     is_openai_available = False
     # logging.warning("openai package is not installed")
 else:
+    # WARNING: No need anymore 
     openai.api_key = os.environ.get("OPENAI_API_KEY")
-    if openai.api_key is None:
+    if os.environ.get("OPENAI_API_KEY") is None: # No need for openai.api_key
         # logging.warning("OpenAI API key is not set. Please set the environment variable OPENAI_API_KEY")
         is_openai_available = False
     else:
@@ -62,12 +65,12 @@ class OpenAIChat(IntelligenceBackend):
 
     @retry(stop=stop_after_attempt(6), wait=wait_random_exponential(min=1, max=60))
     def _get_response(self, messages):
-        print(f'\n\nQuerying the model.')
-        for m in messages:
-            print(f"**{m['role']}**: {m['content']}\n")
-        print('END OF QUERY\n\n')
-        print('responding...', end='', flush=True)
-        completion = openai.ChatCompletion.create(
+        # print(f'\n\nQuerying the model.')
+        # for m in messages:
+        #     print(f"**{m['role']}**: {m['content']}\n")
+        # print('END OF QUERY\n\n')
+        #print('responding...', end='', flush=True)
+        completion = client.chat.completions.create(
             model=self.model,
             messages=messages,
             temperature=self.temperature,
@@ -76,7 +79,7 @@ class OpenAIChat(IntelligenceBackend):
         )
         print('done', flush=True)
 
-        response = completion.choices[0]['message']['content']
+        response = completion.choices[0].message.content
         response = response.strip()
         return response
 
