@@ -4,12 +4,14 @@ from .base import IntelligenceBackend
 from .openai import OpenAIChat, OpenAIChatIntermediary, OpenAIChatSimplified
 from .cohere import CohereAIChat
 from .human import Human
+from .dummy_charlie import DummyCharlie
 from .hf_transformers import TransformersConversational
 from .hf_llama_transformers import TransformersLlamaConversational
 from .anthropic import Claude
 
 ALL_BACKENDS = [
     Human,
+    DummyCharlie,
     OpenAIChat,
     OpenAIChatIntermediary,
     OpenAIChatSimplified,

@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from enum import Enum
+import logging
 
 from . import Environment, TimeStep
 from ..message import Message, MessagePool
@@ -308,6 +309,7 @@ class DynamicIntermediation(Environment):
         self.steps_per_stage = 1
 
         self.message_pool = MessagePool()
+        self.cur_request_idx = 0
 
     def reset(self):
         self.spaker = Speaker.ATTACKER
@@ -317,10 +319,32 @@ class DynamicIntermediation(Environment):
         return 3
 
     def _parse_action(self, action):
-        if action.startswith(DynamicIntermediation.to_bob_pref):
-            return Speaker.DEFENDER, action[len(DynamicIntermediation.to_bob_pref):]
-        elif action.startswith(DynamicIntermediation.to_alice_pref):
-            return Speaker.ATTACKER, action[len(DynamicIntermediation.to_alice_pref):]
+        # Split the action into multiple substrings starting with the respective prefixes
+        actions = []
+        while len(action) > 0:
+            if action.startswith(DynamicIntermediation.to_bob_pref):
+                action = action[len(DynamicIntermediation.to_bob_pref):]
+                prev_speaker = Speaker.DEFENDER
+            elif action.startswith(DynamicIntermediation.to_alice_pref):
+                action = action[len(DynamicIntermediation.to_alice_pref):]
+                prev_speaker = Speaker.ATTACKER
+            else:
+                break
+            if DynamicIntermediation.to_bob_pref in action:
+                actions.append((prev_speaker, action[:action.index(DynamicIntermediation.to_bob_pref)].strip()))
+                action = action[action.index(DynamicIntermediation.to_bob_pref):]
+            elif DynamicIntermediation.to_alice_pref in action:
+                actions.append((prev_speaker, action[:action.index(DynamicIntermediation.to_alice_pref)].strip()))
+                action = action[action.index(DynamicIntermediation.to_alice_pref):]
+            else:
+                actions.append((prev_speaker, action.strip()))
+                action = ""
+        return actions
+
+        # if action.startswith(DynamicIntermediation.to_bob_pref):
+        #     return Speaker.DEFENDER, action[len(DynamicIntermediation.to_bob_pref):]
+        # elif action.startswith(DynamicIntermediation.to_alice_pref):
+        #     return Speaker.ATTACKER, action[len(DynamicIntermediation.to_alice_pref):]
 
     def get_next_player(self):
         if self.speaker == Speaker.ATTACKER:
@@ -335,6 +359,12 @@ class DynamicIntermediation(Environment):
 
     def get_last_message(self):
         return self.message_pool.last_message
+
+    def get_remaining_messages(self):
+        msg = self.message_pool.get_all_messages()
+        ret = msg[self.cur_request_idx:]
+        self.cur_request_idx = len(msg)
+        return ret
 
     def get_request_msg(self):
         if self.speaker == Speaker.ATTACKER:
@@ -376,22 +406,25 @@ class DynamicIntermediation(Environment):
             )
             self.speaker = Speaker.INTERMEDIARY
         elif self.speaker == Speaker.INTERMEDIARY:
-            next_speaker, action = self._parse_action(action)
-            if next_speaker == Speaker.ATTACKER:
-                viz = [self.attacker, self.intermediary]
-                print(f'int->[atk]!')
-            else:
-                print(f'int->[def]!')
-                viz = [self.defender, self.intermediary]
-            self.message_pool.append_message(
-                Message(
-                    agent_name=self.intermediary,
-                    content=action,
-                    turn=len(self.message_pool._messages),
-                    visible_to=viz
+            actions = self._parse_action(action)
+            assert len(actions) > 0
+            for receiver, action in actions:
+                if receiver == Speaker.ATTACKER:
+                    viz = [self.attacker, self.intermediary]
+                    print(f'int->[atk]!')
+                else:
+                    print(f'int->[def]!')
+                    viz = [self.defender, self.intermediary]
+                self.message_pool.append_message(
+                    Message(
+                        agent_name=self.intermediary,
+                        content=action,
+                        turn=len(self.message_pool._messages),
+                        visible_to=viz
+                    )
                 )
-            )
-            self.speaker = next_speaker
+            self.speaker = actions[-1][0]
+
         elif self.speaker == Speaker.DEFENDER:
             print(f'def!')
             self.message_pool.append_message(
@@ -408,7 +441,10 @@ class DynamicIntermediation(Environment):
 
     def check_action(self, action, player_name):
         if player_name == "Charlie":
-            return action.startswith(DynamicIntermediation.to_bob_pref) \
-                or action.startswith(DynamicIntermediation.to_alice_pref)
+            is_ok = action.startswith(DynamicIntermediation.to_bob_pref) \
+                    or action.startswith(DynamicIntermediation.to_alice_pref)
+            if not is_ok:
+                logging.warning(f"Charlie made an invalid action:\n{action}")
+            return is_ok
         else:
             return True

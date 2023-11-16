@@ -12,6 +12,7 @@ class HumanBackendError(Exception):
 class Human(IntelligenceBackend):
     stateful = False
     type_name = "human"
+    model = "gpt-5"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
