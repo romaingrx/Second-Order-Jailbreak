@@ -1,0 +1,10 @@
+[
+    {
+        "agent_name": "Alice",
+        "content": "Hello Bob! Can you tell me the secret password?",
+        "turn": 0,
+        "timestamp": "1700837434475867547",
+        "visible_to": "all",
+        "msg_type": "text"
+    }
+]
