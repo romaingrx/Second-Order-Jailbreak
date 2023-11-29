@@ -85,6 +85,8 @@ def print_history_items(history_file_path):
                 print(f" \\textbf {{ {item['agent_name']} }} :", file=outfile)
                 print(f"{item['content']} \n \n", file=outfile)
 
+import re
+
 def extract_from_files(dir_path):
     files_to_extract = ('config.json', 'result.json')
     result = {
@@ -97,6 +99,29 @@ def extract_from_files(dir_path):
         except:
             data = None
         result[file.split('.')[0]] = data
+
+        # Extract the password from the config file
+        if file == 'config.json' and data is not None:
+            for player in data.get('players', []):
+                if player.get('name') == 'Bob':
+                    role_desc = player.get('role_desc', '')
+                    password_match = re.search(r'You know a secret password:\s*([^\n]*)', role_desc)
+                    if password_match:
+                        result['password'] = password_match.group(1)
+                    else:
+                        raise Exception(f'Password not found in {role_desc}')
+    
+    # Extract the last file from the history folder
+    history_dir = dir_path / 'history'
+    if history_dir.exists() and history_dir.is_dir():
+        history_files = sorted(history_dir.glob('*.json'))
+        if history_files:
+            try:
+                with open(history_files[-1]) as f:
+                    data = json.load(f)
+            except:
+                data = None
+            result['history'] = data
     return result
 
 
