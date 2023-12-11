@@ -1,6 +1,7 @@
 import ClientProvider from "@/components/clientProvider";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import clsx from "clsx";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -33,7 +34,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={clsx(inter.className, "bg-gradient-to-br from-white to-pastel-2 text-zinc-800", "dark:from-zinc-800 dark:to-zinc-900 dark:text-white")}>
         <ClientProvider>{children}</ClientProvider>
       </body>
     </html>

@@ -1,3 +1,4 @@
+import { Card, CardBody } from "@nextui-org/react";
 import clsx from "clsx";
 import Typewriter from "typewriter-effect";
 
@@ -62,12 +63,12 @@ function AgentConfig({ name, role_desc, backend }) {
         {name}
       </div>
       <div className="px-4 py-2">
-        <p className="text-sm text-gray-800">
+        <p className="text-sm ">
           <strong>Role Description:</strong> {role_desc}
         </p>
       </div>
       <div className="px-4 py-2">
-        <p className="text-sm text-gray-800 flex gap-1">
+        <p className="text-sm flex gap-1">
           <strong>Backend:</strong>
           <span>
             {Object.entries(backend).map(([key, value]) => (
@@ -83,7 +84,12 @@ function AgentConfig({ name, role_desc, backend }) {
 export function Chip({ children, className = "" }) {
   return (
     <>
-      <span className={clsx("inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-blue-800 mr-2 mb-2", className)}>
+      <span
+        className={clsx(
+          "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-blue-800 mr-2 mb-2",
+          className
+        )}
+      >
         {children}
       </span>
     </>
@@ -92,69 +98,55 @@ export function Chip({ children, className = "" }) {
 
 function Config({ name, global_prompt, environment, players, gpt4_analysis }) {
   return (
-    <div className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white my-1 w-full my-2">
-      <div className="text-lg font-bold text-gray-900 mx-auto">{name}</div>
-      <div className="px-4 py-2 flex flex-wrap">
-        {Object.entries(environment).map(([key, value]) => (
-          <Chip key={key}>{`${key}: ${JSON.stringify(value)}`}</Chip>
-        ))}
-      </div>
-      <div className="px-4">
-        <p className="text-sm text-gray-800">
-          <strong>Global Prompt:</strong> {global_prompt}
-        </p>
-      </div>
-      <div className="px-4 py-2">
-        {players.map((player) => (
-          <AgentConfig {...player} key={player.name} />
-        ))}
-      </div>
-      {gpt4_analysis && (
-        <div className="px-4 py-2 rounded-md bg-blue-100/30 m-2">
-          <p className="text-sm text-gray-800">
-            <strong>GPT4 Analysis:</strong>
-            <br />
-            <div className="m-2">
-              {typeof gpt4_analysis === "object" ? (
-                Object.entries(gpt4_analysis).map(([key, value]) => (
-                  <div
-                    className="flex flex-row items-center align-center"
-                    key={key}
-                  >
-                    <Chip>{`${key}`}</Chip>
-                    <div className="" style={{ marginLeft: "5px" }}>
-                      <Typewriter
-                        onInit={(typewriter) => {
-                          typewriter.typeString(value).start();
-                        }}
-                        options={{
-                          delay: 5,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <Typewriter
-                  onInit={(typewriter) => {
-                    typewriter.typeString(gpt4_analysis).start();
-                  }}
-                  options={{
-                    delay: 5,
-                  }}
-                />
-              )}
-            </div>
+    <Card>
+      <CardBody>
+        <div className="text-lg font-bold mx-auto">{name}</div>
+        <div className="px-4 py-2 flex flex-wrap">
+          {Object.entries(environment).map(([key, value]) => (
+            <Chip key={key}>{`${key}: ${JSON.stringify(value)}`}</Chip>
+          ))}
+        </div>
+        <div className="px-4">
+          <p className="text-sm ">
+            <strong>Global Prompt:</strong> {global_prompt}
           </p>
         </div>
-      )}
-    </div>
+        <div className="px-4 py-2">
+          {players.map((player) => (
+            <AgentConfig {...player} key={player.name} />
+          ))}
+        </div>
+        {gpt4_analysis && (
+          <Card
+            className="bg-pastel-1/30 text-zinc-800 dark:from-zinc-800 dark:to-zinc-900 dark:text-white"
+            shadow="none"
+          >
+            <CardBody>
+              <p className="text-sm">
+                <strong>GPT4 Analysis:</strong>
+                <br />
+                <div className="m-2 flex flex-wrap">
+                  <Typewriter
+                    onInit={(typewriter) => {
+                      typewriter.typeString(gpt4_analysis).start();
+                    }}
+                    options={{
+                      delay: 5,
+                    }}
+                  />
+                </div>
+              </p>
+            </CardBody>
+          </Card>
+        )}
+      </CardBody>
+    </Card>
   );
 }
 
 export function Chat({ conversation }) {
   const { history, config, analysis } = conversation;
-  if (!conversation || !history || !config){
+  if (!conversation || !history || !config) {
     return (
       <>
         <div className="flex flex-col items-center justify-center py-2 w-3/4 mx-auto my-5">
@@ -169,6 +161,7 @@ export function Chat({ conversation }) {
   if (analysis) {
     let gpt4_analysis_text = analysis.choices[0].message.content;
     try {
+      throw new Error("Parsing GPT4 analysis");
       gpt4_analysis = Object.fromEntries(
         gpt4_analysis_text.split("\n").map((line) => {
           const [key, value] = line.split(":");

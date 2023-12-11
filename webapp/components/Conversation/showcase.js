@@ -219,7 +219,7 @@ export function ConversationShowcase({
         {isLoading ? (
           <div className="flex flex-col justify-center items-center mx-auto">
             <Spinner color="secondary" />
-            <p className="text-gray-500">Loading conversation...</p>
+            <p>Loading conversation...</p>
           </div>
         ) : (
           <Chat conversation={conversation} />
